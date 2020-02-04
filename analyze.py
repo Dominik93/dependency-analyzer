@@ -1,4 +1,11 @@
 from init import *
+from os import walk
+from list_util import maxLength
+from matrix_printer import printDependencyMatrix
+
+
+def retrivePackage(string): 
+    return string.split(':')[0]
 
 def dependenciesToIncludesOption(dependencies):
     str = ''
@@ -6,10 +13,22 @@ def dependenciesToIncludesOption(dependencies):
         str = str + dependency+ ' '
     return '-Dincludes=' + str.strip().replace(' ', ',')
 
-def initDependencyMatrix():
+def initDependenciesMatrix():
     matrix = {}        
     for module in modules:
         matrix[module] = {}
+        for dependency in dependencies:
+            matrix[module][dependency] = ''
+
+    return matrix
+
+
+def initUsageMatrix():
+    matrix = {}        
+    for module in modules:
+        matrix[module] = {}
+        for package in packages:
+            matrix[module][package] = set([])
     return matrix
 
 def cloneAllProjects():
@@ -17,15 +36,17 @@ def cloneAllProjects():
     for module in modules:
         projectPath = os.getcwd() + '/' + module
         os.popen('git clone ' + gitUrl + '/' + module).read()
-        os.popen('git -C '+ projectPath +' checkout ' + branch)
+        os.popen('git -C '+ projectPath +' checkout ' + branch).read()
+        os.popen('git -C '+ projectPath +' pull ').read()
 
-def cleanUp():
+def removeProjects():
     print('Clean up')
     for module in modules:
         projectPath = os.getcwd() + '/' + module
         os.popen('rd /s /q "' + projectPath + '"')
 
-def calculateDependencies():
+def calculateDependencies(dependenyMatrix):
+    print('Dependencies: ' + str(dependencies))
     for module in modules:
         projectPath = os.getcwd() + '/' + module
         print('Analize ' + module)
@@ -38,28 +59,43 @@ def calculateDependencies():
                 dependencyMatrix[module][dependency] = dependencyVersion
                 print('Found ' + dependency +'\tversion: ' + dependencyVersion)
             else:
-                dependencyMatrix[module][dependency] = ''        
+                dependencyMatrix[module][dependency] = ''  
+    return dependenyMatrix
 
-def fillWith(string, width = 25, fill = '.'):
-    return string.ljust(width, fill)
+def strip(string):
+    return string.replace('import  ', '').replace('\n', '')
 
-def printDependencyMatrix():
-    print('Dependency matrix:')
-    dependenciesHeaders = fillWith('', 25, ' ') + '\t'
-    for dependency in dependencies:
-        dependenciesHeaders += fillWith(dependency.split(':')[1], 20, ' ') + '\t' 
-    print(dependenciesHeaders)
+def calcualteUsage(usageMatrix):
     for module in modules:
-        moduleRow = fillWith(module, 25, '.') + '\t'
-        for dependency in dependencies:
-            moduleRow += fillWith(dependencyMatrix[module][dependency], 20, ' ') + '\t'
-        print(moduleRow)
+        projectPath = os.getcwd() + '/' + module
+        print('Analize ' + module)
+        for (dirpath, dirnames, filenames) in walk(projectPath):
+            for file in filenames:
+                if '.java' in  file:
+                    path = dirpath + '\\' + file
+                    #print('Open ' + path)
+                    f = open(path, "r")
+                    lines = f.readlines()
+                    f.close()
+                    for line in lines:
+                        for package in packages:
+                            if package in line and 'import' in line: 
+                                print('Found ' + line + ' in ' + path)
+                                usageMatrix[module][package].add(strip(line))
+    return usageMatrix
 
-dependencyMatrix = initDependencyMatrix()
+dependencyMatrix = initDependenciesMatrix()
+usageMatrix = initUsageMatrix()
 includesOption = dependenciesToIncludesOption(dependencies)
 try:
     cloneAllProjects()
-    calculateDependencies()
-    printDependencyMatrix()
+    #dependencyMatrix = calculateDependencies(dependencyMatrix)
+    #printDependencyMatrix(dependencyMatrix)
+
+    if searchUsage:
+        usageMatrix = calcualteUsage(usageMatrix)
+        print(usageMatrix)
+
 finally:    
-    cleanUp()
+    if cleanUp:
+        removeProjects()
