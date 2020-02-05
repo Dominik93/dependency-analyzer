@@ -1,4 +1,4 @@
-from init import *
+from init import modules, dependencies, packages
 from list_util import maxLength
 
 SEPARATOR = '  |  '
@@ -6,40 +6,57 @@ SEPARATOR = '  |  '
 def retriveDependency(string): 
     return string.split(':')[1]
 
-def fillWith(string, width, fill = '.'):
-    return string.ljust(width, fill)
-
-def printSeparator():
+def printSeparator(dependencyMatrix):
+    modulesWithVersion = addVersion(dependencyMatrix, modules)
+    modulesWidth = maxLength(modulesWithVersion)
     dependenciesWidth = maxLength(map(retriveDependency, dependencies)) 
-    separator = fillWith('', dependenciesWidth, '-') + '-----'
+    separator = ''.ljust(modulesWidth, '-') + '-----'
     for dependency in dependencies:
-        separator += fillWith('', dependenciesWidth, '-') + '-----'
+        separator += ''.ljust(dependenciesWidth, '-') + '-----'
     print(separator)
 
-def printHeaders():
+def printHeaders(dependencyMatrix):
     dependenciesWidth = maxLength(map(retriveDependency, dependencies)) 
-    modulesWidth = maxLength(modules)
-    dependenciesHeaders = fillWith('', modulesWidth, ' ') + SEPARATOR
+    modulesWithVersion = addVersion(dependencyMatrix, modules)
+    modulesWidth = maxLength(modulesWithVersion)
+    dependenciesHeaders = ''.ljust(modulesWidth, ' ') + SEPARATOR
     for dependency in dependencies:
-        dependenciesHeaders += fillWith(retriveDependency(dependency), dependenciesWidth, ' ') + SEPARATOR
+        dependenciesHeaders += retriveDependency(dependency).ljust(dependenciesWidth, ' ') + SEPARATOR
     print(dependenciesHeaders)
     
 def printRow(dependencyMatrix, module, modulesWidth):
     dependenciesWidth = maxLength(map(retriveDependency, dependencies))
-    moduleRow = fillWith(module, modulesWidth, '.') + SEPARATOR
+    moduleRow = (module + ' ' + dependencyMatrix[module]['_version']).ljust(modulesWidth, '.') + SEPARATOR
     for dependency in dependencies:
-        moduleRow += fillWith(dependencyMatrix[module][dependency], dependenciesWidth, ' ') + SEPARATOR
+        moduleRow += dependencyMatrix[module][dependency].ljust(dependenciesWidth, ' ') + SEPARATOR
     print(moduleRow)
 
+def addVersion(dependencyMatrix, modules):
+    modulesWithVersion = []
+    for module in modules:
+        modulesWithVersion.append(module + ' ' + dependencyMatrix[module]['_version'])
+    return modulesWithVersion
+
 def printContent(dependencyMatrix):
-    modulesWidth = maxLength(modules)
+    modulesWithVersion = addVersion(dependencyMatrix, modules)
+    modulesWidth = maxLength(modulesWithVersion)
     for module in modules:
         printRow(dependencyMatrix, module, modulesWidth)
 
 def printDependencyMatrix(dependencyMatrix):
     print('Dependency matrix:')
-    printHeaders()
-    printSeparator()
+    printHeaders(dependencyMatrix)
+    printSeparator(dependencyMatrix)
     printContent(dependencyMatrix)
+    printSeparator(dependencyMatrix)
    
 
+def printUsageMatrix(usageMatrix):
+    print('Usage matrix:')
+    for module in usageMatrix.keys():
+        print('Module: ' + module)	
+        for dependency in usageMatrix[module].keys():
+            if len(usageMatrix[module][dependency]) > 0:
+                print('Dependency:' + dependency)
+                for item in usageMatrix[module][dependency]:
+                    print('\t' + str(item))
