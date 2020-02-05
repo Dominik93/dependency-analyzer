@@ -4,3 +4,4 @@ branch = master
 [PROJECTS]
 modules = module_1, module_2
 dependencies = group_id:atrefact_id, group_id:atrefact_id
+packages = com.packages.artefact, com.packages.other.artefact
