@@ -2,7 +2,7 @@ import os
 import re
 from list_util import maxLength
 
-class UsageAnalyzer:
+class ClassUsageAnalyzer:
 
     modules = []
     packages = []

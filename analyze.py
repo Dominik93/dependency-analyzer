@@ -1,8 +1,8 @@
 import os
-from init import modules, dependencies, packages, gitUrl, searchUsage, cleanUp, branch, searchDependency, classRegexp
+from init import modules, dependencies, packages, gitUrl, searchClassUsage, cleanUp, branch, searchDependency, classRegexp
 from dependency.dependency_analyzer import DependenciesAnalyzer
-from usage.usage_analyzer import UsageAnalyzer
-from matrix_printer import printUsageMatrix
+from usage.class_usage_analyzer import ClassUsageAnalyzer
+from usage.class_usage_printer import printUsageMatrix
 from dependency.dependency_printer import DependencyPriter
 
 def cloneAllProjects():
@@ -27,8 +27,8 @@ try:
         dependenciesPriter = DependencyPriter(dependencyMatrix)
         dependenciesPriter.printDependencyMatrix()
 
-    if searchUsage:
-        usageAnalyzer = UsageAnalyzer(modules, packages, classRegexp)
+    if searchClassUsage:
+        usageAnalyzer = ClassUsageAnalyzer(modules, packages, classRegexp)
         usageMatrix = usageAnalyzer.calcualteUsage()
         printUsageMatrix(usageMatrix)
 
