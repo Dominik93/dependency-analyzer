@@ -1,7 +1,10 @@
 [GIT]
 url = https://username:password@url
 branch = master
-[PROJECTS]
-modules = module_1, module_2
+[MODULES]
+modules =  module_1, module_2
+[DEPENDENCY]
 dependencies = group_id:atrefact_id, group_id:atrefact_id
+[USAGE]
 packages = com.packages.artefact, com.packages.other.artefact
+class_regexp = regexp

@@ -1,5 +1,5 @@
 import os
-from init import modules, dependencies, packages, gitUrl, searchUsage, cleanUp, branch, searchDependency
+from init import modules, dependencies, packages, gitUrl, searchUsage, cleanUp, branch, searchDependency, classRegexp
 from dependency.dependency_analyzer import DependenciesAnalyzer
 from usage.usage_analyzer import UsageAnalyzer
 from matrix_printer import printUsageMatrix
@@ -28,7 +28,7 @@ try:
         dependenciesPriter.printDependencyMatrix()
 
     if searchUsage:
-        usageAnalyzer = UsageAnalyzer(modules, packages)
+        usageAnalyzer = UsageAnalyzer(modules, packages, classRegexp)
         usageMatrix = usageAnalyzer.calcualteUsage()
         printUsageMatrix(usageMatrix)
 

@@ -1,4 +1,5 @@
 import os
+import re
 from list_util import maxLength
 
 class UsageAnalyzer:
@@ -6,11 +7,14 @@ class UsageAnalyzer:
     modules = []
     packages = []
 
+    classRegexp  = ''
+
     usageMatrix = {}
 
-    def __init__(self, modules, packages):
+    def __init__(self, modules, packages, classRegexp):
         self.modules = modules
         self.packages = packages
+        self.classRegexp = classRegexp
 
         self.usageMatrix = self.initUsageMatrix()
 
@@ -40,7 +44,9 @@ class UsageAnalyzer:
                         for line in lines:
                             for package in self.packages:
                                 if package in line and 'import' in line: 
-                                    self.usageMatrix[module][package].add(self.stripImport(line))
+                                    classWithPackage = self.stripImport(line)
+                                    if re.search(self.classRegexp, classWithPackage):
+                                        self.usageMatrix[module][package].add(classWithPackage)
         return self.usageMatrix
 
     def stripImport(self, string):

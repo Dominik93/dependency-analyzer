@@ -16,10 +16,16 @@ args = parser.parse_args()
 config = configparser.ConfigParser()
 config.read(args.config_file)
 gitUrl = config['GIT']['url']
+branch = config['GIT']['branch']
+
 cleanUp = args.no_clean_up
 searchDependency = args.search_dependency
 searchUsage = args.search_usage
-branch = config['GIT']['branch']
-modules = stripArray(config['PROJECTS']['modules'].split(','))
-dependencies = stripArray(config['PROJECTS']['dependencies'].split(','))
-packages = stripArray(config['PROJECTS']['packages'].split(','))
+
+modules = stripArray(config['MODULES']['modules'].split(','))
+
+dependencies = stripArray(config['DEPENDENCY']['dependencies'].split(','))
+
+packages = stripArray(config['USAGE']['packages'].split(','))
+
+classRegexp = config['USAGE']['class_regexp']
