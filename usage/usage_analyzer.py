@@ -33,7 +33,8 @@ class UsageAnalyzer:
                 for file in filenames:
                     if '.java' in file:
                         path = dirpath + '\\' + file
-                        f = open(path, "r", encoding = "utf8")
+                        f = open(path, "r")
+                        #f = open(path, "r", encoding = "utf8")
                         lines = f.readlines()
                         f.close()
                         for line in lines:

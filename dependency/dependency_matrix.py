@@ -32,7 +32,15 @@ class DependencyMatrix:
         self.modules[moduleName]._setVersion(version)    
 
     def setDependencyVersionInModule(self, moduleName, dependencyName, version):
+        print('Set version in ' + moduleName + ' of ' + dependencyName + ' to ' + version)
         self.modules[moduleName]._setDependencyVersion(dependencyName, version)
 
     def getAllModules(self):
         return self.modules.keys()  
+    
+    def __repr__(self):
+        return self.__str__()
+
+    def __str__(self):
+        return str(self.modules)
+    

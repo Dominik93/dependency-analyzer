@@ -2,10 +2,11 @@ class Dependency:
 
     name = ''
 
-    version = ''
+    version = 'unknown'
 
     def __init__(self, name):
         self.name = name
+        self.version = 'unknown'
 
     def _setVersion(self, version):
         self.version = version
@@ -14,4 +15,4 @@ class Dependency:
         return self.__str__()
 
     def __str__(self):
-        return self.name + ':' + self.version
+       return self.name + ':' + self.version

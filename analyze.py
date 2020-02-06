@@ -1,5 +1,5 @@
 import os
-from init import modules, dependencies, packages, gitUrl, searchUsage, cleanUp, branch
+from init import modules, dependencies, packages, gitUrl, searchUsage, cleanUp, branch, searchDependency
 from dependency.dependency_analyzer import DependenciesAnalyzer
 from usage.usage_analyzer import UsageAnalyzer
 from matrix_printer import printUsageMatrix
@@ -18,16 +18,17 @@ def removeProjects():
         projectPath = os.getcwd() + '/' + module
         os.popen('rd /s /q "' + projectPath + '"')
 
-dependenciesAnalyzer = DependenciesAnalyzer(modules, dependencies)
-usageAnalyzer = UsageAnalyzer(modules, packages)
-
 try:
     cloneAllProjects()
-    dependencyMatrix = dependenciesAnalyzer.calculateDependencies()
-    dependenciesPriter = DependencyPriter(dependencyMatrix)
-    dependenciesPriter.printDependencyMatrix()
+   
+    if searchDependency:
+        dependenciesAnalyzer = DependenciesAnalyzer(modules, dependencies)
+        dependencyMatrix = dependenciesAnalyzer.calculateDependencies()
+        dependenciesPriter = DependencyPriter(dependencyMatrix)
+        dependenciesPriter.printDependencyMatrix()
 
     if searchUsage:
+        usageAnalyzer = UsageAnalyzer(modules, packages)
         usageMatrix = usageAnalyzer.calcualteUsage()
         printUsageMatrix(usageMatrix)
 
