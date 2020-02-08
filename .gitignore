@@ -131,3 +131,6 @@ dmypy.json
 .vscode
 
 *.ini
+
+server/class_usages.html
+server/dependencies.html
