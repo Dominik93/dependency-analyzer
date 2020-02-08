@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+    $(function () {
+      $("#includedDependencies").load("dependencies.html");
+      $("#includedClassUsage").load("class_usages.html");
+    });
+  </script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    #inputModule {
+      background-image: url('/search.png');
+      background-position: 10px 10px;
+      background-repeat: no-repeat;
+      width: 100%;
+      font-size: 16px;
+      padding: 12px 20px 12px 40px;
+      border: 1px solid #ddd;
+      margin-bottom: 12px;
+    }
+
+    #modulesTable {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid #ddd;
+      font-size: 18px;
+    }
+
+    #modulesTable th,
+    #modulesTable td {
+      text-align: left;
+      padding: 12px;
+    }
+
+    #modulesTable tr {
+      border-bottom: 1px solid #ddd;
+    }
+
+    #modulesTable tr.header,
+    #modulesTable tr:hover {
+      background-color: #f1f1f1;
+    }
+
+
+
+
+
+
+    #inputClassUsage {
+      background-image: url('/search.png');
+      background-position: 10px 10px;
+      background-repeat: no-repeat;
+      width: 100%;
+      font-size: 16px;
+      padding: 12px 20px 12px 40px;
+      border: 1px solid #ddd;
+      margin-bottom: 12px;
+    }
+
+    #classUsagesTable {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid #ddd;
+      font-size: 18px;
+    }
+
+    #classUsagesTable th,
+    #classUsagesTable td {
+      text-align: left;
+      padding: 12px;
+    }
+
+    #classUsagesTable tr {
+      border-bottom: 1px solid #ddd;
+    }
+
+    #classUsagesTable tr.header,
+    #classUsagesTable tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Dependencies</h2>
+  <input type="text" id="inputModule" onkeyup="filterModules()" placeholder="Search for modules.."
+    title="Type module here">
+
+  <div id="includedDependencies"></div>
+
+  <h2>Class Usage</h2>
+  <input type="text" id="inputClassUsage" onkeyup="filterClassUsage()" placeholder="Search for modules.."
+    title="Type module here">
+
+  <div id="includedClassUsage"></div>
+
+  <script>
+    function filterModules() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("inputModule");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("modulesTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+
+    function filterClassUsage() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("inputClassUsage");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("classUsagesTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+  </script>
+</body>

@@ -1,6 +1,7 @@
 import os
 import re
 from list_util import maxLength
+from .class_usage_matrix import ClassUsageMatrix
 
 class ClassUsageAnalyzer:
 
@@ -9,25 +10,17 @@ class ClassUsageAnalyzer:
 
     classRegexp  = ''
 
-    usageMatrix = {}
+    matix: ClassUsageMatrix = {}
+
 
     def __init__(self, modules, packages, classRegexp):
+        self.matrix = ClassUsageMatrix(modules, packages)
         self.modules = modules
         self.packages = packages
         self.classRegexp = classRegexp
 
-        self.usageMatrix = self.initUsageMatrix()
-
     def retrivePackage(self, string): 
         return string.split(':')[0]
-
-    def initUsageMatrix(self):
-        matrix = {}        
-        for module in self.modules:
-            matrix[module] = {}
-            for package in self.packages:
-                matrix[module][package] = set([])
-        return matrix
 
     def calcualteUsage(self):
         for module in self.modules:
@@ -37,8 +30,7 @@ class ClassUsageAnalyzer:
                 for file in filenames:
                     if '.java' in file:
                         path = dirpath + '\\' + file
-                        f = open(path, "r")
-                        #f = open(path, "r", encoding = "utf8")
+                        f = open(path, "r", encoding = "utf8")
                         lines = f.readlines()
                         f.close()
                         for line in lines:
@@ -46,8 +38,8 @@ class ClassUsageAnalyzer:
                                 if package in line and 'import' in line: 
                                     classWithPackage = self.stripImport(line)
                                     if re.search(self.classRegexp, classWithPackage):
-                                        self.usageMatrix[module][package].add(classWithPackage)
-        return self.usageMatrix
+                                        self.matrix.addDependencyClassInModule(module, package, classWithPackage)
+        return self.matrix
 
     def stripImport(self, string):
         return string.replace('import ', '').replace('\n', '').replace(';', '')

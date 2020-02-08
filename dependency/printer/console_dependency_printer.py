@@ -1,10 +1,10 @@
 from list_util import maxLength
-from .dependency_matrix import DependencyMatrix
+from ..dependency_matrix import DependencyMatrix
 
-
-class DependencyPriter:
+class ConsoleDependencyPrinter:
 
     SEPARATOR = '  |  '
+    ROW_SEPARATOR = '-----'
     dependencyMatrix = {}
 
     moduleWidth = 0
@@ -27,9 +27,12 @@ class DependencyPriter:
         return string.split(':')[1]
 
     def __printRowSeparator(self):
-        rowSeparator = ''.ljust(self.moduleWidth, '-') + '-----'
-        for dependency in self.dependencyMatrix.dependencies:
-            rowSeparator += ''.ljust(self.dependencyWidth, '-') + '-----'
+        rowSeparator = ''.ljust(self.moduleWidth, '-') + self.ROW_SEPARATOR
+        size = len(self.dependencyMatrix.dependencies)
+        i = 0 
+        while i < size:
+            rowSeparator += ''.ljust(self.dependencyWidth, '-') + self.ROW_SEPARATOR
+            i += 1
         print(rowSeparator)
 
     def __printHeaders(self):
