@@ -1,5 +1,5 @@
 import os
-from init_manual import *
+from init.init_manual import gitUrl, branch, modules, dependencies, printStrategy, packages, cleanUp, searchClassUsage, searchDependency, classRegexp
 from analyze import analyzeClassUsage, analyzeDependencies, cloneAllProjects, removeProjects
 
 try:

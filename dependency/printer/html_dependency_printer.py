@@ -1,4 +1,3 @@
-from list_util import maxLength
 from ..dependency_matrix import DependencyMatrix
 import os
 

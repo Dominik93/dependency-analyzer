@@ -1,5 +1,4 @@
 import os
-from list_util import maxLength
 from .dependency_matrix import DependencyMatrix
 from .maven import Maven
 

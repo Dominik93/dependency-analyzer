@@ -1,6 +1,5 @@
 import configparser
 import argparse
-from list_util import stripArray
 parser = argparse.ArgumentParser(description='Live server for analyze dependencies')
 parser.add_argument("--config-file", help='Configuration file, default config.ini', default='config.ini')
 parser.add_argument("--host", help='Host', default='')
@@ -14,9 +13,9 @@ config.read(args.config_file)
 
 gitUrl = config['GIT']['url']
 branch = config['GIT']['branch']
-modules = stripArray(config['MODULES']['modules'].split(','))
-dependencies = stripArray(config['DEPENDENCY']['dependencies'].split(','))
-packages = stripArray(config['USAGE']['packages'].split(','))
+modules = list(map(str.strip, config['MODULES']['modules'].split(',')))
+dependencies = list(map(str.strip, config['DEPENDENCY']['dependencies'].split(',')))
+packages = list(map(str.strip, config['USAGE']['packages'].split(',')))
 classRegexp = config['USAGE']['class_regexp']
 printStrategy = 'html'
 host = args.host

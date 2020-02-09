@@ -1,5 +1,4 @@
-from list_util import maxLength
-from .class_usage_matrix import ClassUsageMatrix
+from ..class_usage_matrix import ClassUsageMatrix
 import os
 
 
@@ -10,7 +9,7 @@ class HtmlClassUsagePrinter:
     def __init__(self, classUsageMatrix: ClassUsageMatrix):
         self.classUsageMatrix = classUsageMatrix
 
-    def printUsageMatrix(self):
+    def printClassUsageMatrix(self):
         f = open("server/class_usages.html", 'w')
         f.write('<table id="classUsagesTable">\n<tbody>\n')
         f.write(self.__printHeaders())
@@ -34,10 +33,7 @@ class HtmlClassUsagePrinter:
     def __printRow(self, module):
         moduleRow = '<tr>\n' + self.__addTag((module + ' ' + self.classUsageMatrix.getModule(module).version), 'td')
         for dependency in self.classUsageMatrix.dependencies:
-            if len(self.classUsageMatrix.getDependency(module, dependency).classes) != 0:
-                moduleRow += self.__addTag(str(self.classUsageMatrix.getDependency(module, dependency).classes), 'td')
-            else:
-                moduleRow += self.__addTag('', 'td')
+            moduleRow += self.__addTag(self.__classesToHtml(self.classUsageMatrix.getDependency(module, dependency).classes), 'td')
         moduleRow += '</tr>\n'
         return (moduleRow)
 
@@ -52,3 +48,9 @@ class HtmlClassUsagePrinter:
         
     def __retriveDependency(self,string): 
         return string.split(':')[0]
+
+    def __classesToHtml(self, classes):
+        content = ''
+        for aClass in classes:
+            content += aClass + '\n'
+        return content

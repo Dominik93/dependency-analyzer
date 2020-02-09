@@ -4,8 +4,6 @@ import configparser
 import shutil
 import argparse
 
-from list_util import stripArray
-
 parser = argparse.ArgumentParser(description='Tool for analyze dependencies')
 parser.add_argument("--config-file", help='Configuration file, default config.ini', default='config.ini')
 parser.add_argument("--only-include-modules", help='Ignore modules in config and use only this', default='')
@@ -27,17 +25,19 @@ searchDependency = args.search_dependencies
 searchClassUsage = args.search_class_usage
 
 if len(args.only_include_modules) == 0:
-    modules = stripArray(config['MODULES']['modules'].split(','))
+    modules = list(map(str.strip, config['MODULES']['modules'].split(',')))
 else :
-    modules = stripArray(args.only_include_modules.split(','))
+    modules = list(map(str.strip, args.only_include_modules.split(',')))
     
 if len(args.only_include_dependencies) == 0:
-    dependencies = stripArray(config['DEPENDENCY']['dependencies'].split(','))
+    dependencies = list(map(str.strip, config['DEPENDENCY']['dependencies'].split(',')))
 else :
-    dependencies = stripArray(args.only_include_dependencies.split(','))
+    dependencies = list(map(str.strip, args.only_include_dependencies.split(',')))
     
-packages = stripArray(config['USAGE']['packages'].split(','))
+packages = list(map(str.strip, config['USAGE']['packages'].split(',')))
 
 classRegexp = config['USAGE']['class_regexp']
 
 printStrategy = args.print
+
+print(dependencies)

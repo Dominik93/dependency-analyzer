@@ -1,4 +1,3 @@
-from list_util import maxLength
 from ..dependency_matrix import DependencyMatrix
 
 class ConsoleDependencyPrinter:
@@ -13,8 +12,8 @@ class ConsoleDependencyPrinter:
     def __init__(self, dependencyMatrix: DependencyMatrix):
         self.dependencyMatrix = dependencyMatrix
         modulesWithVersion = self.__addVersion(self.dependencyMatrix.getAllModules())
-        self.moduleWidth = maxLength(modulesWithVersion)
-        self.dependencyWidth = maxLength(map(self.__retriveDependency, self.dependencyMatrix.dependencies)) 
+        self.moduleWidth = len(max(modulesWithVersion, key=len))
+        self.dependencyWidth = len(max(map(self.__retriveDependency, self.dependencyMatrix.dependencies), key=len))
 
     def printDependencyMatrix(self):
         print('Dependency matrix:')
@@ -50,6 +49,13 @@ class ConsoleDependencyPrinter:
         for dependency in self.dependencyMatrix.dependencies:
             moduleRow += self.dependencyMatrix.getDependency(module, dependency).version.ljust(self.dependencyWidth, ' ') + self.SEPARATOR
         print(moduleRow)
+        
+    def __maxLength(self, array):
+        length = 0
+        for item in array:
+            if len(item) > length:
+                length = len(item)
+        return length        
 
     def __addVersion(self, modules):
         modulesWithVersion = []

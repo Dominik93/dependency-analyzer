@@ -4,8 +4,7 @@ import threading
 import configparser
 import argparse
 import time
-from list_util import stripArray
-from init_live import modules, packages, dependencies, gitUrl, branch,intervalInMunites, classRegexp, printStrategy, host, port
+from init.init_live import modules, packages, dependencies, gitUrl, branch,intervalInMunites, classRegexp, printStrategy, host, port
 from server.http_server import startServer
 from analyze import analyzeClassUsage, analyzeDependencies, cloneAllProjects
 

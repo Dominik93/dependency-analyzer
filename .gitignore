@@ -134,3 +134,4 @@ dmypy.json
 
 server/class_usages.html
 server/dependencies.html
+temp/
