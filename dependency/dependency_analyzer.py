@@ -1,32 +1,31 @@
-import os
-from .dependency_matrix import DependencyMatrix
-from .maven import Maven
+import pickle
 
 class DependenciesAnalyzer:
 
-    modules = []
-    dependencies = []
-    maven = {}
-    dependencyMatrix : DependencyMatrix = {}
-
-    def __init__(self, modules, dependencies):
-        print('Modules: ' + str(modules))
-        print('Dependencies: ' + str(dependencies))
-        self.maven = Maven(dependencies)
+    def __init__(self, maven, modules, dependencies):
+        print('Modules: ' + str(modules.get()))
+        print('Dependencies: ' + str(dependencies.get()))
+        self.maven = maven
         self.modules = modules
-        self.dependencyMatrix = DependencyMatrix(modules, dependencies)
+        self.dependencyMatrix = {}
         self.dependencies = dependencies
 
+    def store(self):        
+        with open('store.dependency_matrix', 'wb') as configFile:
+            pickle.dump(self.dependencyMatrix, configFile)
+
     def calculateDependencies(self):
-        for module in self.modules:
-            print('')
-            print('Analize ' + module)
-            dependencyTree = self.maven.dependencyTree(module)
-            self.dependencyMatrix.setModuleVersion(module, self.maven.findModuleVersion(module))
-            for dependency in self.dependencies:
-                if dependency in dependencyTree:
-                    indexOfDependency = dependencyTree.find(dependency)
+        for module in self.modules.get():
+            print('Analyze ' + module.name)
+            dependencyTree = self.maven.dependencyTree(module, self.dependencies)
+            for dependency in self.dependencies.get():
+                if dependency.getName() in dependencyTree:
+                    indexOfDependency = dependencyTree.find(dependency.getName()+":")
                     dependencyFromTree = dependencyTree[indexOfDependency: dependencyTree.find('\n', indexOfDependency)]
                     dependencyVersion = dependencyFromTree.split(':')[3] 
-                    self.dependencyMatrix.setDependencyVersionInModule(module, dependency, dependencyVersion)
-        return self.dependencyMatrix
+                    if module.name not in self.dependencyMatrix:
+                        self.dependencyMatrix[module.name] = {}
+                    self.dependencyMatrix[module.name][dependency.artifactId] = dependencyVersion
+                else:
+                    self.dependencyMatrix[module.name][dependency.artifactId] = ''   
+ 

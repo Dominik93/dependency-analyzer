@@ -131,7 +131,9 @@ dmypy.json
 .vscode
 
 *.ini
+.idea
 
 server/class_usages.html
 server/dependencies.html
+store.*
 temp/

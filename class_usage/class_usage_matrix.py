@@ -1,6 +1,6 @@
 
-from .class_usage_module import ClassUsageModule
-from .class_usage_dependency import ClassUsageDependency
+from class_usage.class_usage_module import ClassUsageModule
+from class_usage.class_usage_dependency import ClassUsageDependency
 
 class ClassUsageMatrix:
 
@@ -14,10 +14,10 @@ class ClassUsageMatrix:
 
     def __initDependenciesMatrix(self, modules, dependencies):
         matrix = {}        
-        for module in modules:
-            matrix[module] = ClassUsageModule(module)
+        for module in modules.get():
+            matrix[module.name] = ClassUsageModule(module.name)
             for dependency in dependencies:
-                matrix[module]._addDependency(ClassUsageDependency(dependency))
+                matrix[module.name]._addDependency(ClassUsageDependency(dependency))
         return matrix
 
     def addModule(self, module: ClassUsageModule):

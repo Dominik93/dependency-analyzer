@@ -1,4 +1,4 @@
-from .class_usage_dependency import ClassUsageDependency
+from class_usage.class_usage_dependency import ClassUsageDependency
 
 class ClassUsageModule:
 
@@ -29,4 +29,4 @@ class ClassUsageModule:
         return self.__str__()
 
     def __str__(self):
-        return self.name + ':' + self.version + ' Class usages: ' + str(self.dependencies)
+        return str(self.name) + ':' + str(self.version) + ' Class usages: ' + str(self.dependencies)

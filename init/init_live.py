@@ -13,11 +13,13 @@ config.read(args.config_file)
 
 gitUrl = config['GIT']['url']
 branch = config['GIT']['branch']
-modules = list(map(str.strip, config['MODULES']['modules'].split(',')))
-dependencies = list(map(str.strip, config['DEPENDENCY']['dependencies'].split(',')))
-packages = list(map(str.strip, config['USAGE']['packages'].split(',')))
-classRegexp = config['USAGE']['class_regexp']
-printStrategy = 'html'
+
+rawModules = list(map(str.strip, config['MODULES']['modules'].split(',')))
+rawDependencies = list(map(str.strip, config['DEPENDENCY']['dependencies'].split(',')))
+rawPackages = list(map(str.strip, config['CLASS_USAGE']['packages'].split(',')))
+
+classRegexp = config['CLASS_USAGE']['class_regexp']
+
 host = args.host
 intervalInMunites = int(args.interval)
 port = int(args.port)

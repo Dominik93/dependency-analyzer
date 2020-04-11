@@ -1,13 +1,15 @@
-from ..class_usage_matrix import ClassUsageMatrix
+
 import os
 
 
 class HtmlClassUsagePrinter:
 
-    classUsageMatrix: ClassUsageMatrix = {}
+    classUsageMatrix = {}
 
-    def __init__(self, classUsageMatrix: ClassUsageMatrix):
-        self.classUsageMatrix = classUsageMatrix
+    def __init__(self, classUsageMatrix, modules, dependencies):
+        self.classUsageMatrix = classUsageMatrix        
+        self.modules = modules
+        self.dependencies = dependencies
 
     def printClassUsageMatrix(self):
         f = open("server/class_usages.html", 'w')
@@ -19,21 +21,21 @@ class HtmlClassUsagePrinter:
 
     def __printHeaders(self):
         dependenciesHeaders = '<tr class="header">\n' + self.__addTag('', 'th' )
-        for dependency in self.classUsageMatrix.dependencies:
-            dependenciesHeaders += self.__addTag(self.__retriveDependency(dependency), 'th')
+        for dependency in self.dependencies.get():
+            dependenciesHeaders += self.__addTag(dependency.artifactId + ":" + dependency.version, 'th')
         dependenciesHeaders += '</tr>\n'
         return (dependenciesHeaders)
           
     def __printContent(self):
         content = ''
-        for module in self.classUsageMatrix.getAllModules():
+        for module in self.modules.get():
             content += self.__printRow(module)
         return content
 
     def __printRow(self, module):
-        moduleRow = '<tr>\n' + self.__addTag((module + ' ' + self.classUsageMatrix.getModule(module).version), 'td')
+        moduleRow = '<tr>\n' + self.__addTag((module.name + ' ' + module.version), 'td')
         for dependency in self.classUsageMatrix.dependencies:
-            moduleRow += self.__addTag(self.__classesToHtml(self.classUsageMatrix.getDependency(module, dependency).classes), 'td')
+            moduleRow += self.__addTag(self.__classesToHtml(self.classUsageMatrix.getDependency(module.name, dependency).classes), 'td')
         moduleRow += '</tr>\n'
         return (moduleRow)
 
