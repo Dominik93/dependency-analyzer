@@ -1,6 +1,8 @@
 
 from .mail_sender import MailSender
 
+from .tamplate_manager import readTemplate
+
 class SubscriptionScheduler:
 
     oldDependencies = {}
@@ -21,7 +23,11 @@ class SubscriptionScheduler:
         for oldDep in self.oldDependencies.get(): 
             newDep = self.dependencies.getDependency(oldDep.getName())
             if (oldDep.version != newDep.version):
-                print("New Dependency!")
+                template = readTemplate('subscription/dependency_template.txt')
+                properties = {}
+                properties['NAME'] = newDep.artifactId
+                properties['NEW_VERSION'] = newDep.version
+                self.mailSender.sentMail("Dependency notification", template, properties)
 
 
 

@@ -12,6 +12,7 @@ class DependenciesScheduler:
 
     def add(self, schedule, rawDependencies):
         schedule.every(self.intervalInMunites).minutes.do(lambda : self.run(rawDependencies))
+        self.run(rawDependencies)
 
     def run(self, rawDependencies):
         print('Run dependencies scheduler')

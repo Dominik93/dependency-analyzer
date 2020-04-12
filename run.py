@@ -5,7 +5,7 @@ import schedule
 import threading
 
 from server.http_server import startServer
-from init.init_live import rawModules, rawPackages, rawDependencies, gitUrl, branch, intervalInMunites, classRegexp, host, port
+from init import mailConfig, rawModules, rawPackages, rawDependencies, gitUrl, branch, intervalInMunites, classRegexp, host, port
 from maven.maven import Maven
 from dependency.dependency_factory import DependencyFactory
 from dependency.dependency_analyzer import DependenciesAnalyzer
@@ -19,6 +19,7 @@ from module.modules_scheduler import ModulesScheduler
 from module.modules import Modules
 from printer.printer_scheduler import PrinterScheduler
 from git.git import Git
+from subscription.mail_sender import MailSender
 
 
 path = os.getcwd() + '/temp/'
@@ -28,7 +29,6 @@ maven = Maven()
 serverThread = threading.Thread(target=startServer, args=(host, port,))
 serverThread.daemon = True
 serverThread.start()
-
 
 depScheduler = DependenciesScheduler(git, maven, intervalInMunites)
 depScheduler.add(schedule, rawDependencies)
@@ -45,27 +45,10 @@ classUsageScheduler.add(schedule)
 printerScheduler = PrinterScheduler(intervalInMunites, Modules(), Dependencies())
 printerScheduler.add(schedule)
 
-subscriptionScheduler = SubscriptionScheduler(intervalInMunites, Dependencies(), MailSender())
+subscriptionScheduler = SubscriptionScheduler(intervalInMunites, Dependencies(), MailSender(mailConfig))
 subscriptionScheduler.add(schedule)
 
 while True:
     schedule.run_pending()
     time.sleep(1)
 schedule.clear()   
-
-
-# run dependency scheduler
-    # load from config
-    # calcualte depenendcies
-    # store dependencies
-# run class usage scheduler
-    # load from config
-    # calcualte class usage
-    # store class usage
-# run subscription scheduler
-    # load from config 
-    # run dependency
-    # if stored dependencies exist calculate difference
-    # send notifications
-    # store depenecies
-# run server for visualization dependencies and class usage

@@ -8,3 +8,10 @@ dependencies = project_1|group_id:atrefact_id, project_1|group_id:atrefact_id
 [CLASS_USAGE]
 packages = com.packages.artefact, com.packages.other.artefact
 class_regexp = regexp
+[MAIL_CONFIG]
+sender=mail@domain.com
+sender_password=pass
+host=smtp.domain.com
+port=000
+[SUBSCRIPTION]
+default_recipient = mail@domain.com

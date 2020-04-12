@@ -11,6 +11,7 @@ class ModulesScheduler:
 
     def add(self, schedule, rawModules):
         schedule.every(self.intervalInMunites).minutes.do(lambda : self.run(rawModules))
+        self.run(rawModules)
 
     def run(self, rawModules):
         print('Run modules scheduler')

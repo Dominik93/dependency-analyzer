@@ -137,3 +137,4 @@ server/class_usages.html
 server/dependencies.html
 store.*
 temp/
+subscription/*.txt

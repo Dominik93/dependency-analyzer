@@ -23,3 +23,12 @@ classRegexp = config['CLASS_USAGE']['class_regexp']
 host = args.host
 intervalInMunites = int(args.interval)
 port = int(args.port)
+
+
+mail_config = config['MAIL_CONFIG']
+mailConfig ={}
+mailConfig['host'] = mail_config['host']
+mailConfig['port'] = mail_config['port']
+mailConfig['sender'] = mail_config['sender']
+mailConfig['password'] = mail_config['sender_password'] 
+mailConfig['recipient'] = config['SUBSCRIPTION']['default_recipient']
