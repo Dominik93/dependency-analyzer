@@ -1,13 +1,16 @@
 
+from .mail_sender import MailSender
+
 class SubscriptionScheduler:
 
     oldDependencies = {}
 
-    def __init__(self, intervalInMunites, dependencies):
+    def __init__(self, intervalInMunites, dependencies, mailSender):
         self.dependencies = dependencies
         self.dependencies.load()
         self.oldDependencies = self.dependencies
         self.intervalInMunites = intervalInMunites
+        self.mailSender = mailSender
 
     def add(self, schedule):
         schedule.every(self.intervalInMunites).minutes.do(lambda : self.run())

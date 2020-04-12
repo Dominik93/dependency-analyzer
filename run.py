@@ -31,23 +31,22 @@ serverThread.start()
 
 
 depScheduler = DependenciesScheduler(git, maven, intervalInMunites)
-#depScheduler.add(schedule, rawDependencies)
+depScheduler.add(schedule, rawDependencies)
 
 modScheduler = ModulesScheduler(git, maven, intervalInMunites)
-#modScheduler.add(schedule, rawModules)
+modScheduler.add(schedule, rawModules)
 
 depMatrix = DependencyScheduler(maven, intervalInMunites, DependencyFactory(git, maven), ModuleFactory(git, maven))
-#depMatrix.add(schedule, rawModules, rawDependencies)
-
+depMatrix.add(schedule, rawModules, rawDependencies)
 
 classUsageScheduler = ClassUsageScheduler(intervalInMunites, Modules(), rawPackages, classRegexp)
-#classUsageScheduler.run()
+classUsageScheduler.add(schedule)
 
 printerScheduler = PrinterScheduler(intervalInMunites, Modules(), Dependencies())
-printerScheduler.run()
+printerScheduler.add(schedule)
 
-subscriptionScheduler = SubscriptionScheduler(intervalInMunites, Dependencies())
-subscriptionScheduler.run()
+subscriptionScheduler = SubscriptionScheduler(intervalInMunites, Dependencies(), MailSender())
+subscriptionScheduler.add(schedule)
 
 while True:
     schedule.run_pending()
