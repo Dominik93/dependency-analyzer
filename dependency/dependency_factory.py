@@ -26,4 +26,4 @@ class DependencyFactory:
             groupId = rawDependency.split(':')[0]
             artifactId = rawDependency.split(':')[1]
             version = 'unknown'
-            return Dependency(groupId, artifactId, version, project)
+            return Dependency(groupId, artifactId, version)
