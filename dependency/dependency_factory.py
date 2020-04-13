@@ -15,11 +15,15 @@ class DependencyFactory:
         return dependencies
 
     def create(self, rawDependency):
-        project = rawDependency.split("|")[0]
-        groupId = rawDependency.split("|")[1].split(':')[0]
-        artifactId = rawDependency.split("|")[1].split(':')[1]
-        version = 'unknown'
-        if project != '':
+        if('|' in rawDependency):
+            project = rawDependency.split("|")[0]
+            groupId = rawDependency.split("|")[1].split(':')[0]
+            artifactId = rawDependency.split("|")[1].split(':')[1]
             self.git.clone(project)
             version = self.maven.findModuleVersion(project)
-        return Dependency(groupId, artifactId, version, project)
+            return Dependency(groupId, artifactId, version, project)
+        else:
+            groupId = rawDependency.split(':')[0]
+            artifactId = rawDependency.split(':')[1]
+            version = 'unknown'
+            return Dependency(groupId, artifactId, version, project)

@@ -4,7 +4,8 @@ branch = master
 [MODULES]
 modules =  module_1, module_2
 [DEPENDENCY]
-dependencies = project_1|group_id:atrefact_id, project_1|group_id:atrefact_id
+internal = project_1|group_id:atrefact_id, project_2|group_id:atrefact_id
+external = group_id:atrefact_id, group_id:atrefact_id
 [CLASS_USAGE]
 packages = com.packages.artefact, com.packages.other.artefact
 class_regexp = regexp

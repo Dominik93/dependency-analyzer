@@ -15,7 +15,9 @@ gitUrl = config['GIT']['url']
 branch = config['GIT']['branch']
 
 rawModules = list(map(str.strip, config['MODULES']['modules'].split(',')))
-rawDependencies = list(map(str.strip, config['DEPENDENCY']['dependencies'].split(',')))
+rawDependencies = list(map(str.strip, config['DEPENDENCY']['internal'].split(',')))
+rawDependencies.extend(list(map(str.strip, config['DEPENDENCY']['external'].split(','))))
+print(rawDependencies)
 rawPackages = list(map(str.strip, config['CLASS_USAGE']['packages'].split(',')))
 
 classRegexp = config['CLASS_USAGE']['class_regexp']
