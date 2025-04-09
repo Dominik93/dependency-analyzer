@@ -1,32 +1,31 @@
-import os
 from .dependency_matrix import DependencyMatrix
 from .maven import Maven
 
-class DependenciesAnalyzer:
 
+class DependenciesAnalyzer:
     modules = []
     dependencies = []
     maven = {}
-    dependencyMatrix : DependencyMatrix = {}
+    dependency_matrix: DependencyMatrix = {}
 
     def __init__(self, modules, dependencies):
         print('Modules: ' + str(modules))
         print('Dependencies: ' + str(dependencies))
         self.maven = Maven(dependencies)
         self.modules = modules
-        self.dependencyMatrix = DependencyMatrix(modules, dependencies)
+        self.dependency_matrix = DependencyMatrix(modules, dependencies)
         self.dependencies = dependencies
 
     def calculateDependencies(self):
         for module in self.modules:
             print('')
             print('Analize ' + module)
-            dependencyTree = self.maven.dependencyTree(module)
-            self.dependencyMatrix.setModuleVersion(module, self.maven.findModuleVersion(module))
+            dependency_tree = self.maven.dependencyTree(module)
+            self.dependency_matrix.setModuleVersion(module, self.maven.find_module_version(module))
             for dependency in self.dependencies:
-                if dependency in dependencyTree:
-                    indexOfDependency = dependencyTree.find(dependency)
-                    dependencyFromTree = dependencyTree[indexOfDependency: dependencyTree.find('\n', indexOfDependency)]
-                    dependencyVersion = dependencyFromTree.split(':')[3] 
-                    self.dependencyMatrix.setDependencyVersionInModule(module, dependency, dependencyVersion)
-        return self.dependencyMatrix
+                if dependency in dependency_tree:
+                    index_of_dependency = dependency_tree.find(dependency)
+                    dependency_from_tree = dependency_tree[index_of_dependency: dependency_tree.find('\n', index_of_dependency)]
+                    dependency_version = dependency_from_tree.split(':')[3]
+                    self.dependency_matrix.setDependencyVersionInModule(module, dependency, dependency_version)
+        return self.dependency_matrix

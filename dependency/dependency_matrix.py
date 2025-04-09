@@ -1,46 +1,45 @@
 from .module import Module
 from .dependency import Dependency
 
-class DependencyMatrix:
 
+class DependencyMatrix:
     modules = {}
 
     dependencies = []
 
     def __init__(self, modules, dependencies):
         self.dependencies = dependencies
-        self.modules = self.__initDependenciesMatrix(modules, dependencies)
+        self.modules = self.__init_dependencies_matrix(modules, dependencies)
 
-    def __initDependenciesMatrix(self, modules, dependencies):
-        matrix = {}        
+    def __init_dependencies_matrix(self, modules, dependencies):
+        matrix = {}
         for module in modules:
             matrix[module] = Module(module)
             for dependency in dependencies:
-                matrix[module]._addDependency(Dependency(dependency))
+                matrix[module]._add_dependency(Dependency(dependency))
         return matrix
 
     def addModule(self, module: Module):
         self.modules[module.name] = module
 
-    def getModule(self, moduleName):
-        return self.modules[moduleName]  
+    def get_module(self, module_name):
+        return self.modules[module_name]
 
-    def getDependency(self, moduleName, dependencyName):
-        return self.getModule(moduleName)._getDependency(dependencyName)
+    def get_dependency(self, module_name, dependency_name):
+        return self.get_module(module_name)._get_dependency(dependency_name)
 
-    def setModuleVersion(self, moduleName, version):
-        self.modules[moduleName]._setVersion(version)    
+    def setModuleVersion(self, module_name, version):
+        self.modules[module_name]._set_version(version)
 
-    def setDependencyVersionInModule(self, moduleName, dependencyName, version):
-        print('Set version in ' + moduleName + ' of ' + dependencyName + ' to ' + version)
-        self.modules[moduleName]._setDependencyVersion(dependencyName, version)
+    def setDependencyVersionInModule(self, module_name, dependency_name, version):
+        print('Set version in ' + module_name + ' of ' + dependency_name + ' to ' + version)
+        self.modules[module_name]._set_dependency_version(dependency_name, version)
 
-    def getAllModules(self):
-        return self.modules.keys()  
-    
+    def get_all_modules(self):
+        return self.modules.keys()
+
     def __repr__(self):
         return self.__str__()
 
     def __str__(self):
         return str(self.modules)
-    

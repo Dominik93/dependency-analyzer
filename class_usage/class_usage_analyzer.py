@@ -2,39 +2,39 @@ import os
 import re
 from .class_usage_matrix import ClassUsageMatrix
 
-class ClassUsageAnalyzer:
 
+class ClassUsageAnalyzer:
     modules = []
     packages = []
 
-    classRegexp  = ''
+    class_regexp = ''
 
-    matix: ClassUsageMatrix = {}
+    matrix: ClassUsageMatrix = {}
 
-    def __init__(self, modules, packages, classRegexp):
+    def __init__(self, modules, packages, class_regexp):
         self.matrix = ClassUsageMatrix(modules, packages)
         self.modules = modules
         self.packages = packages
-        self.classRegexp = classRegexp
+        self.class_regexp = class_regexp
 
-    def calcualteClassUsage(self):
+    def calculate_class_usage(self):
         for module in self.modules:
-            projectPath = os.getcwd() + '/temp/' + module
+            project_path = os.getcwd() + '/temp/' + module
             print('Analize ' + module)
-            for (dirpath, dirnames, filenames) in os.walk(projectPath):
+            for (dirpath, dirnames, filenames) in os.walk(project_path):
                 for file in filenames:
                     if '.java' in file:
                         path = dirpath + '\\' + file
-                        f = open(path, "r", encoding = "utf8")
+                        f = open(path, "r", encoding="utf8")
                         lines = f.readlines()
                         f.close()
                         for line in lines:
                             for package in self.packages:
-                                if package in line and 'import' in line: 
-                                    classWithPackage = self.__stripImport(line)
-                                    if re.search(self.classRegexp, classWithPackage):
-                                        self.matrix.addDependencyClassInModule(module, package, classWithPackage)
+                                if package in line and 'import' in line:
+                                    class_with_package = self.__strip_import(line)
+                                    if re.search(self.class_regexp, class_with_package):
+                                        self.matrix.add_dependency_class_in_module(module, package, class_with_package)
         return self.matrix
 
-    def __stripImport(self, string):
+    def __strip_import(self, string):
         return string.replace('import ', '').replace('\n', '').replace(';', '')

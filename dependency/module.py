@@ -2,7 +2,6 @@ from .dependency import Dependency
 
 
 class Module:
-
     name = ''
 
     version = 'unknown'
@@ -14,17 +13,17 @@ class Module:
         self.version = 'unknown'
         self.dependencies = {}
 
-    def _setVersion(self, version):
+    def _set_version(self, version):
         self.version = version
 
-    def _getDependency(self, dependencyName):
-        return self.dependencies[dependencyName]
+    def _get_dependency(self, dependency_name):
+        return self.dependencies[dependency_name]
 
-    def _addDependency(self, dependency: Dependency):
+    def _add_dependency(self, dependency: Dependency):
         self.dependencies[dependency.name] = dependency
 
-    def _setDependencyVersion(self, dependencyName, version):
-        self._getDependency(dependencyName)._setVersion(version)
+    def _set_dependency_version(self, dependency_name, version):
+        self._get_dependency(dependency_name)._set_version(version)
 
     def __repr__(self):
         return self.__str__()

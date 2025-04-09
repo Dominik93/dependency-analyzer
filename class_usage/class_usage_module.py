@@ -1,7 +1,7 @@
 from .class_usage_dependency import ClassUsageDependency
 
-class ClassUsageModule:
 
+class ClassUsageModule:
     name = ''
 
     version = 'unknown'
@@ -13,17 +13,17 @@ class ClassUsageModule:
         self.version = 'unknown'
         self.dependencies = {}
 
-    def _setVersion(self, version):
+    def _set_version(self, version):
         self.version = version
 
-    def _getDependency(self, dependencyName):
-        return self.dependencies[dependencyName]
+    def _get_dependency(self, dependency_name):
+        return self.dependencies[dependency_name]
 
-    def _addDependency(self, dependency: ClassUsageDependency):
+    def _add_dependency(self, dependency: ClassUsageDependency):
         self.dependencies[dependency.name] = dependency
 
-    def _addDependencyClass(self, dependencyName, aClass):
-        self._getDependency(dependencyName)._addClass(aClass)
+    def _add_dependency_class(self, dependency_name, a_class):
+        self._get_dependency(dependency_name)._addClass(a_class)
 
     def __repr__(self):
         return self.__str__()

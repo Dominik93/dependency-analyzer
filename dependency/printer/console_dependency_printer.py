@@ -1,64 +1,67 @@
 from ..dependency_matrix import DependencyMatrix
 
-class ConsoleDependencyPrinter:
 
+class ConsoleDependencyPrinter:
     SEPARATOR = '  |  '
     ROW_SEPARATOR = '-----'
-    dependencyMatrix = {}
+    dependency_matrix = {}
 
-    moduleWidth = 0
-    dependencyWidth = 0
+    module_width = 0
+    dependency_width = 0
 
-    def __init__(self, dependencyMatrix: DependencyMatrix):
-        self.dependencyMatrix = dependencyMatrix
-        modulesWithVersion = self.__addVersion(self.dependencyMatrix.getAllModules())
-        self.moduleWidth = len(max(modulesWithVersion, key=len))
-        self.dependencyWidth = len(max(map(self.__retriveDependency, self.dependencyMatrix.dependencies), key=len))
+    def __init__(self, dependency_matrix: DependencyMatrix):
+        self.dependency_matrix = dependency_matrix
+        modules_with_version = self.__add_version(self.dependency_matrix.get_all_modules())
+        self.module_width = len(max(modules_with_version, key=len))
+        self.dependency_width = len(max(map(self.__retrive_dependency, self.dependency_matrix.dependencies), key=len))
 
     def printDependencyMatrix(self):
         print('Dependency matrix:')
-        self.__printHeaders()
-        self.__printRowSeparator()
-        self.__printContent()
-        self.__printRowSeparator()
+        self.__print_headers()
+        self.__print_row_separator()
+        self.__print_content()
+        self.__print_row_separator()
 
-    def __retriveDependency(self,string): 
+    def __retrive_dependency(self, string):
         return string.split(':')[1]
 
-    def __printRowSeparator(self):
-        rowSeparator = ''.ljust(self.moduleWidth, '-') + self.ROW_SEPARATOR
-        size = len(self.dependencyMatrix.dependencies)
-        i = 0 
+    def __print_row_separator(self):
+        row_separator = ''.ljust(self.module_width, '-') + self.ROW_SEPARATOR
+        size = len(self.dependency_matrix.dependencies)
+        i = 0
         while i < size:
-            rowSeparator += ''.ljust(self.dependencyWidth, '-') + self.ROW_SEPARATOR
+            row_separator += ''.ljust(self.dependency_width, '-') + self.ROW_SEPARATOR
             i += 1
-        print(rowSeparator)
+        print(row_separator)
 
-    def __printHeaders(self):
-        dependenciesHeaders = ''.ljust(self.moduleWidth, ' ') + self.SEPARATOR
-        for dependency in self.dependencyMatrix.dependencies:
-            dependenciesHeaders += self.__retriveDependency(dependency).ljust(self.dependencyWidth, ' ') + self.SEPARATOR
-        print(dependenciesHeaders)
-          
-    def __printContent(self):
-        for module in self.dependencyMatrix.getAllModules():
-            self.__printRow(module)
+    def __print_headers(self):
+        dependencies_headers = ''.ljust(self.module_width, ' ') + self.SEPARATOR
+        for dependency in self.dependency_matrix.dependencies:
+            dependencies_headers += self.__retrive_dependency(dependency).ljust(self.dependency_width,
+                                                                                ' ') + self.SEPARATOR
+        print(dependencies_headers)
 
-    def __printRow(self, module):
-        moduleRow = (module + ' ' + self.dependencyMatrix.getModule(module).version).ljust(self.moduleWidth, '.') + self.SEPARATOR
-        for dependency in self.dependencyMatrix.dependencies:
-            moduleRow += self.dependencyMatrix.getDependency(module, dependency).version.ljust(self.dependencyWidth, ' ') + self.SEPARATOR
-        print(moduleRow)
-        
-    def __maxLength(self, array):
+    def __print_content(self):
+        for module in self.dependency_matrix.get_all_modules():
+            self.__print_row(module)
+
+    def __print_row(self, module):
+        module_row = (module + ' ' + self.dependency_matrix.get_module(module).version).ljust(self.module_width,
+                                                                                              '.') + self.SEPARATOR
+        for dependency in self.dependency_matrix.dependencies:
+            module_row += self.dependency_matrix.get_dependency(module, dependency).version.ljust(self.dependency_width,
+                                                                                                  ' ') + self.SEPARATOR
+        print(module_row)
+
+    def __max_length(self, array):
         length = 0
         for item in array:
             if len(item) > length:
                 length = len(item)
-        return length        
+        return length
 
-    def __addVersion(self, modules):
-        modulesWithVersion = []
+    def __add_version(self, modules):
+        modules_with_version = []
         for module in modules:
-            modulesWithVersion.append(module + ' ' + self.dependencyMatrix.getModule(module).version)
-        return modulesWithVersion
+            modules_with_version.append(module + ' ' + self.dependency_matrix.get_module(module).version)
+        return modules_with_version

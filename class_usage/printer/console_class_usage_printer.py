@@ -1,12 +1,9 @@
-
 class ConsoleClassUsagePrinter:
-    
-    classUsageMatrix = {}
+    class_usage_matrix = {}
 
-    def __init__ (self, classUsageMatrix):
-        self.classUsageMatrix = classUsageMatrix
-
+    def __init__(self, class_usage_matrix):
+        self.class_usage_matrix = class_usage_matrix
 
     def printClassUsageMatrix(self):
         print('Class usage matrix:')
-        print(self.classUsageMatrix)
+        print(self.class_usage_matrix)

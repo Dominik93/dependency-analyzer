@@ -1,5 +1,6 @@
 import configparser
 import argparse
+
 parser = argparse.ArgumentParser(description='Live server for analyze dependencies')
 parser.add_argument("--config-file", help='Configuration file, default config.ini', default='config.ini')
 parser.add_argument("--host", help='Host', default='')
@@ -16,8 +17,8 @@ branch = config['GIT']['branch']
 modules = list(map(str.strip, config['MODULES']['modules'].split(',')))
 dependencies = list(map(str.strip, config['DEPENDENCY']['dependencies'].split(',')))
 packages = list(map(str.strip, config['USAGE']['packages'].split(',')))
-classRegexp = config['USAGE']['class_regexp']
-printStrategy = 'html'
+class_regexp = config['USAGE']['class_regexp']
+print_strategy = 'html'
 host = args.host
 intervalInMunites = int(args.interval)
 port = int(args.port)

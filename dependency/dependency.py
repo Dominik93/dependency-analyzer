@@ -1,5 +1,4 @@
 class Dependency:
-
     name = ''
 
     version = 'unknown'
@@ -15,4 +14,4 @@ class Dependency:
         return self.__str__()
 
     def __str__(self):
-       return self.name + ':' + self.version
+        return self.name + ':' + self.version

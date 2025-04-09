@@ -26,18 +26,18 @@ searchClassUsage = args.search_class_usage
 
 if len(args.only_include_modules) == 0:
     modules = list(map(str.strip, config['MODULES']['modules'].split(',')))
-else :
+else:
     modules = list(map(str.strip, args.only_include_modules.split(',')))
-    
+
 if len(args.only_include_dependencies) == 0:
     dependencies = list(map(str.strip, config['DEPENDENCY']['dependencies'].split(',')))
-else :
+else:
     dependencies = list(map(str.strip, args.only_include_dependencies.split(',')))
-    
+
 packages = list(map(str.strip, config['USAGE']['packages'].split(',')))
 
-classRegexp = config['USAGE']['class_regexp']
+class_regexp = config['USAGE']['class_regexp']
 
-printStrategy = args.print
+print_strategy = args.print
 
 print(dependencies)
