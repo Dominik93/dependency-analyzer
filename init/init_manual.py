@@ -17,9 +17,9 @@ config.read(args.config_file)
 gitUrl = config['GIT']['url']
 branch = config['GIT']['branch']
 
-cleanUp = args.no_clean_up
-searchDependency = args.search_dependencies
-searchClassUsage = args.search_class_usage
+clean_up = args.no_clean_up
+search_dependency = args.search_dependencies
+search_class_usage = args.search_class_usage
 
 if len(args.only_include_modules) == 0:
     modules = list(map(str.strip, config['MODULES']['modules'].split(',')))

@@ -1,15 +1,15 @@
-from init.init_manual import gitUrl, branch, modules, dependencies, print_strategy, packages, cleanUp, searchClassUsage, \
-    searchDependency, class_regexp
+from init.init_manual import gitUrl, branch, modules, dependencies, print_strategy, packages, clean_up, search_class_usage, \
+    search_dependency, class_regexp
 from analyze import analyze_class_usage, analyze_dependencies, clone_all_projects, remove_projects
 
 try:
     clone_all_projects(gitUrl, branch, modules)
-    if searchDependency:
+    if search_dependency:
         analyze_dependencies(modules, dependencies, print_strategy)
 
-    if searchClassUsage:
+    if search_class_usage:
         analyze_class_usage(modules, packages, class_regexp, print_strategy)
 
 finally:
-    if cleanUp:
+    if clean_up:
         remove_projects(modules)

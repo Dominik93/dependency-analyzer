@@ -12,7 +12,7 @@ args = parser.parse_args()
 config = configparser.ConfigParser()
 config.read(args.config_file)
 
-gitUrl = config['GIT']['url']
+git_url = config['GIT']['url']
 branch = config['GIT']['branch']
 modules = list(map(str.strip, config['MODULES']['modules'].split(',')))
 dependencies = list(map(str.strip, config['DEPENDENCY']['dependencies'].split(',')))
@@ -20,5 +20,5 @@ packages = list(map(str.strip, config['USAGE']['packages'].split(',')))
 class_regexp = config['USAGE']['class_regexp']
 print_strategy = 'html'
 host = args.host
-intervalInMunites = int(args.interval)
+interval_in_munites = int(args.interval)
 port = int(args.port)
