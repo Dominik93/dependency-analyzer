@@ -7,7 +7,7 @@ class ClassUsageDependency:
         self.name = name
         self.classes = set()
 
-    def _addClass(self, a_class):
+    def _add_class(self, a_class):
         self.classes.add(a_class)
 
     def __repr__(self):

@@ -23,7 +23,7 @@ class ClassUsageModule:
         self.dependencies[dependency.name] = dependency
 
     def _add_dependency_class(self, dependency_name, a_class):
-        self._get_dependency(dependency_name)._addClass(a_class)
+        self._get_dependency(dependency_name)._add_class(a_class)
 
     def __repr__(self):
         return self.__str__()

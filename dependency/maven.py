@@ -4,11 +4,11 @@ import os
 class Maven:
 
     def __init__(self, dependencies):
-        self.includesOption = self.__dependencies_to_includes_option(dependencies)
+        self.includes_option = self.__dependencies_to_includes_option(dependencies)
 
-    def dependencyTree(self, module):
+    def dependency_tree(self, module):
         project_path = os.getcwd() + '/temp/' + module
-        return os.popen('mvn -f ' + project_path + ' dependency:tree ' + self.includesOption).read()
+        return os.popen('mvn -f ' + project_path + ' dependency:tree ' + self.includes_option).read()
 
     def find_module_version(self, module):
         project_path = os.getcwd() + '/temp/' + module

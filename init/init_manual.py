@@ -1,7 +1,4 @@
-import sys
-import os
 import configparser
-import shutil
 import argparse
 
 parser = argparse.ArgumentParser(description='Tool for analyze dependencies')
@@ -11,7 +8,7 @@ parser.add_argument("--search-dependencies", help='Search for dependency in modu
 parser.add_argument("--only-include-dependencies", help='Ignore dependencies in config and use only this', default='')
 parser.add_argument("--search-class-usage", help='Serac form class usage in modules', action='store_true')
 parser.add_argument("--no-clean-up", help='Remove all projects', action='store_false')
-parser.add_argument("--print", choices=['console', 'html'], help='Stategy of printing', default='console')
+parser.add_argument("--print", choices=['console', 'html'], help='Strategy of printing', default='console')
 
 args = parser.parse_args()
 

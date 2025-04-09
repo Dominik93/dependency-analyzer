@@ -20,12 +20,12 @@ class DependenciesAnalyzer:
         for module in self.modules:
             print('')
             print('Analize ' + module)
-            dependency_tree = self.maven.dependencyTree(module)
-            self.dependency_matrix.setModuleVersion(module, self.maven.find_module_version(module))
+            dependency_tree = self.maven.dependency_tree(module)
+            self.dependency_matrix.set_module_version(module, self.maven.find_module_version(module))
             for dependency in self.dependencies:
                 if dependency in dependency_tree:
                     index_of_dependency = dependency_tree.find(dependency)
                     dependency_from_tree = dependency_tree[index_of_dependency: dependency_tree.find('\n', index_of_dependency)]
                     dependency_version = dependency_from_tree.split(':')[3]
-                    self.dependency_matrix.setDependencyVersionInModule(module, dependency, dependency_version)
+                    self.dependency_matrix.set_dependency_version_in_module(module, dependency, dependency_version)
         return self.dependency_matrix

@@ -19,7 +19,7 @@ class DependencyMatrix:
                 matrix[module]._add_dependency(Dependency(dependency))
         return matrix
 
-    def addModule(self, module: Module):
+    def add_module(self, module: Module):
         self.modules[module.name] = module
 
     def get_module(self, module_name):
@@ -28,10 +28,10 @@ class DependencyMatrix:
     def get_dependency(self, module_name, dependency_name):
         return self.get_module(module_name)._get_dependency(dependency_name)
 
-    def setModuleVersion(self, module_name, version):
+    def set_module_version(self, module_name, version):
         self.modules[module_name]._set_version(version)
 
-    def setDependencyVersionInModule(self, module_name, dependency_name, version):
+    def set_dependency_version_in_module(self, module_name, dependency_name, version):
         print('Set version in ' + module_name + ' of ' + dependency_name + ' to ' + version)
         self.modules[module_name]._set_dependency_version(dependency_name, version)
 
