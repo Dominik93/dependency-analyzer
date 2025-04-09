@@ -7,7 +7,7 @@ class Dependency:
         self.name = name
         self.version = 'unknown'
 
-    def _setVersion(self, version):
+    def _set_version(self, version):
         self.version = version
 
     def __repr__(self):
