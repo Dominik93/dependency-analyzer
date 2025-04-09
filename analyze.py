@@ -21,7 +21,7 @@ def remove_projects(modules):
 
 def analyze_dependencies(modules, dependencies, prints_strategy):
     dependencies_analyzer = DependenciesAnalyzer(modules, dependencies)
-    dependency_matrix = dependencies_analyzer.calculateDependencies()
+    dependency_matrix = dependencies_analyzer.calculate_dependencies()
     manager = PrinterManager(prints_strategy)
     manager.set_dependency_matrix(dependency_matrix)
     manager.get_dependency_printer().print_dependency_matrix()

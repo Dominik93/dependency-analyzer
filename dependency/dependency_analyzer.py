@@ -16,7 +16,7 @@ class DependenciesAnalyzer:
         self.dependency_matrix = DependencyMatrix(modules, dependencies)
         self.dependencies = dependencies
 
-    def calculateDependencies(self):
+    def calculate_dependencies(self):
         for module in self.modules:
             print('')
             print('Analize ' + module)
