@@ -14,7 +14,7 @@ args = parser.parse_args()
 
 config = configparser.ConfigParser()
 config.read(args.config_file)
-gitUrl = config['GIT']['url']
+git_url = config['GIT']['url']
 branch = config['GIT']['branch']
 
 clean_up = args.no_clean_up
