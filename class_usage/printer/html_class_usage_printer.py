@@ -51,6 +51,6 @@ class HtmlClassUsagePrinter:
 
     def __classes_to_html(self, classes):
         content = ''
-        for aClass in classes:
-            content += aClass + '\n'
+        for a_class in classes:
+            content += a_class + '\n'
         return content
