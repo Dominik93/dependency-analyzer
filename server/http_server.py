@@ -1,6 +1,5 @@
 import http.server
 import socketserver
-import os
 
 DIRECTORY = "server"
 
@@ -10,7 +9,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         super().__init__(*args, directory=DIRECTORY, **kwargs)
 
 
-def startServer(host, port):
+def start_server(host, port):
     with socketserver.TCPServer((host, port), Handler) as httpd:
         print("Serving at " + host + ":" + str(port))
         httpd.serve_forever()
