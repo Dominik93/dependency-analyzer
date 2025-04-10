@@ -17,11 +17,11 @@ class HtmlClassUsagePrinter:
         f.close()
 
     def __print_headers(self):
-        dependenciesHeaders = '<tr class="header">\n' + self.__add_tag('', 'th')
+        dependencies_headers = '<tr class="header">\n' + self.__add_tag('', 'th')
         for dependency in self.class_usage_matrix.dependencies:
-            dependenciesHeaders += self.__add_tag(self.__retrive_dependency(dependency), 'th')
-        dependenciesHeaders += '</tr>\n'
-        return (dependenciesHeaders)
+            dependencies_headers += self.__add_tag(self.__retrive_dependency(dependency), 'th')
+        dependencies_headers += '</tr>\n'
+        return dependencies_headers
 
     def __print_content(self):
         content = ''
@@ -30,18 +30,18 @@ class HtmlClassUsagePrinter:
         return content
 
     def __print_row(self, module):
-        moduleRow = '<tr>\n' + self.__add_tag((module + ' ' + self.class_usage_matrix.get_module(module).version), 'td')
+        module_row = '<tr>\n' + self.__add_tag((module + ' ' + self.class_usage_matrix.get_module(module).version), 'td')
         for dependency in self.class_usage_matrix.dependencies:
-            moduleRow += self.__add_tag(
+            module_row += self.__add_tag(
                 self.__classes_to_html(self.class_usage_matrix.get_dependency(module, dependency).classes), 'td')
-        moduleRow += '</tr>\n'
-        return (moduleRow)
+        module_row += '</tr>\n'
+        return module_row
 
     def __add_version(self, modules):
-        modulesWithVersion = []
+        modules_with_version = []
         for module in modules:
-            modulesWithVersion.append(module + ' ' + self.class_usage_matrix.get_module(module).version)
-        return modulesWithVersion
+            modules_with_version.append(module + ' ' + self.class_usage_matrix.get_module(module).version)
+        return modules_with_version
 
     def __add_tag(self, string, tag):
         return '<' + tag + '>' + string + '</' + tag + '>\n'
