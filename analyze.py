@@ -32,4 +32,4 @@ def analyze_class_usage(modules, packages, class_regexp, print_strategy):
     class_usage_matrix = class_usage_analyzer.calculate_class_usage()
     manager = PrinterManager(print_strategy)
     manager.set_class_usage_matrix(class_usage_matrix)
-    manager.get_class_usage_printer().printClassUsageMatrix()
+    manager.get_class_usage_printer().print_class_usage_matrix()
