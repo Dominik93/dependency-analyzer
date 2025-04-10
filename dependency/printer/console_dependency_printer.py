@@ -15,7 +15,7 @@ class ConsoleDependencyPrinter:
         self.module_width = len(max(modules_with_version, key=len))
         self.dependency_width = len(max(map(self.__retrive_dependency, self.dependency_matrix.dependencies), key=len))
 
-    def printDependencyMatrix(self):
+    def print_dependency_matrix(self):
         print('Dependency matrix:')
         self.__print_headers()
         self.__print_row_separator()
