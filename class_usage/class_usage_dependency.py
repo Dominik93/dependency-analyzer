@@ -1,13 +1,13 @@
 class ClassUsageDependency:
-    name = ''
+    name: str = ''
 
-    classes = set()
+    classes: set = set()
 
-    def __init__(self, name):
+    def __init__(self, name: str):
         self.name = name
         self.classes = set()
 
-    def _add_class(self, a_class):
+    def add_class(self, a_class: str) -> None:
         self.classes.add(a_class)
 
     def __repr__(self):

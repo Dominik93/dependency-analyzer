@@ -1,5 +1,3 @@
-import http
-
 import schedule
 import threading
 import time

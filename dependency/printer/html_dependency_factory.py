@@ -2,9 +2,9 @@ from ..dependency_matrix import DependencyMatrix
 
 
 class HtmlDependencyFactory:
-    dependency_matrix = {}
+    dependency_matrix: DependencyMatrix = {}
 
-    content = ""
+    content: str = ""
 
     def __init__(self, dependency_matrix: DependencyMatrix):
         self.dependency_matrix = dependency_matrix

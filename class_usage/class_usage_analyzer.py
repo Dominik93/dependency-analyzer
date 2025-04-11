@@ -6,14 +6,14 @@ from .class_usage_matrix import ClassUsageMatrix
 
 
 class ClassUsageAnalyzer:
-    modules = []
-    packages = []
+    modules: list[str] = []
+    packages: list[str] = []
 
-    class_regexp = ''
+    class_regexp: str = ''
 
     matrix: ClassUsageMatrix = {}
 
-    def __init__(self, maven: Maven, modules, packages, class_regexp):
+    def __init__(self, maven: Maven, modules: list[str], packages: list[str], class_regexp: str):
         self.matrix = ClassUsageMatrix(modules, packages)
         self.maven = maven
         self.modules = modules
@@ -40,5 +40,5 @@ class ClassUsageAnalyzer:
                                         self.matrix.add_dependency_class_in_module(module, package, class_with_package)
         return self.matrix
 
-    def __strip_import(self, string):
+    def __strip_import(self, string) -> str:
         return string.replace('import ', '').replace('\n', '').replace(';', '')

@@ -1,13 +1,13 @@
 class Dependency:
-    name = ''
+    name: str = ''
 
-    version = 'unknown'
+    version: str = 'unknown'
 
-    def __init__(self, name):
+    def __init__(self, name: str):
         self.name = name
         self.version = 'unknown'
 
-    def _set_version(self, version):
+    def set_version(self, version: str) -> None:
         self.version = version
 
     def __repr__(self):

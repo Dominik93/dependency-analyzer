@@ -30,8 +30,8 @@ class HtmlClassUsageFactory:
         return content
 
     def __print_row(self, module):
-        module_row = '<tr>\n' + self.__add_tag((module + ' ' + self.class_usage_matrix.get_module(module).version),
-                                               'td')
+        version = module + ' ' + self.class_usage_matrix.get_module(module).version
+        module_row = '<tr>\n' + self.__add_tag(version, 'td')
         for dependency in self.class_usage_matrix.dependencies:
             module_row += self.__add_tag(
                 self.__classes_to_html(self.class_usage_matrix.get_dependency(module, dependency).classes), 'td')

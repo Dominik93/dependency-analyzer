@@ -1,7 +1,7 @@
 class Executor:
 
-    def getcwd(self):
+    def getcwd(self) -> str:
         pass
 
-    def execute(self, command):
+    def execute(self, command: str) -> str:
         pass

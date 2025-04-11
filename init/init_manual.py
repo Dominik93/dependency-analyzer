@@ -14,12 +14,16 @@ args = parser.parse_args()
 
 config = configparser.ConfigParser()
 config.read(args.config_file)
-git_url = config['GIT']['url']
-branch = config['GIT']['branch']
+git_url: str = config['GIT']['url']
+branch: str = config['GIT']['branch']
 
-clean_up = args.no_clean_up
-search_dependency = args.search_dependencies
-search_class_usage = args.search_class_usage
+clean_up: bool = args.no_clean_up
+search_dependency: bool = args.search_dependencies
+search_class_usage: bool = args.search_class_usage
+
+module: list[str] = []
+dependencies: list[str] = []
+packages: list[str] = []
 
 if len(args.only_include_modules) == 0:
     modules = list(map(str.strip, config['MODULES']['modules'].split(',')))
@@ -33,8 +37,8 @@ else:
 
 packages = list(map(str.strip, config['USAGE']['packages'].split(',')))
 
-class_regexp = config['USAGE']['class_regexp']
+class_regexp: str = config['USAGE']['class_regexp']
 
-print_strategy = args.print
+print_strategy: str = args.print
 
 print(dependencies)

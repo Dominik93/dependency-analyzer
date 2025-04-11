@@ -3,12 +3,12 @@ from maven.maven import Maven
 
 
 class DependenciesAnalyzer:
-    modules = []
-    dependencies = []
-    maven = {}
+    modules: list[str] = []
+    dependencies: list[str] = []
+    maven: Maven = {}
     dependency_matrix: DependencyMatrix = {}
 
-    def __init__(self, maven: Maven, modules: [], dependencies: []):
+    def __init__(self, maven: Maven, modules: list[str], dependencies: list[str]):
         print('Modules: ' + str(modules))
         print('Dependencies: ' + str(dependencies))
         self.maven = maven
@@ -18,8 +18,7 @@ class DependenciesAnalyzer:
 
     def calculate_dependencies(self) -> DependencyMatrix:
         for module in self.modules:
-            print('')
-            print('Analyze ' + module)
+            print('\nAnalyze ' + module)
             dependency_tree = self.maven.dependency_tree(module)
             sanitized_dependency_tree = "\n".join(filter(lambda x: "[INFO]" in x, dependency_tree.splitlines()))
             self.dependency_matrix.set_module_version(module, self.maven.find_module_version(module))

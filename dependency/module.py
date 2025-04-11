@@ -2,28 +2,28 @@ from .dependency import Dependency
 
 
 class Module:
-    name = ''
+    name: str = ''
 
-    version = 'unknown'
+    version: str = 'unknown'
 
-    dependencies = {}
+    dependencies: dict[str, Dependency] = {}
 
     def __init__(self, name):
         self.name = name
         self.version = 'unknown'
         self.dependencies = {}
 
-    def _set_version(self, version):
+    def set_version(self, version: str) -> None:
         self.version = version
 
-    def _get_dependency(self, dependency_name):
+    def get_dependency(self, dependency_name: str) -> Dependency:
         return self.dependencies[dependency_name]
 
-    def _add_dependency(self, dependency: Dependency):
+    def add_dependency(self, dependency: Dependency) -> None:
         self.dependencies[dependency.name] = dependency
 
-    def _set_dependency_version(self, dependency_name, version):
-        self._get_dependency(dependency_name)._set_version(version)
+    def set_dependency_version(self, dependency_name: str, version: str) -> None:
+        self.get_dependency(dependency_name).set_version(version)
 
     def __repr__(self):
         return self.__str__()
