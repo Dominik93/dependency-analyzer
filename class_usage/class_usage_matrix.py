@@ -32,6 +32,7 @@ class ClassUsageMatrix:
         self.modules[module_name]._set_version(version)
 
     def add_dependency_class_in_module(self, module_name, dependency_name, a_class):
+        print('To ' + module_name + ' add ' + dependency_name + ' with package ' + a_class)
         self.modules[module_name]._add_dependency_class(dependency_name, a_class)
 
     def get_all_modules(self):
@@ -42,3 +43,8 @@ class ClassUsageMatrix:
 
     def __str__(self):
         return str(self.modules)
+    def __eq__(self, other):
+        if not isinstance(other, ClassUsageMatrix):
+            return NotImplemented
+
+        return self.modules == other.modules and self.dependencies == other.dependencies

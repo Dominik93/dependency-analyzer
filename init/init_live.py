@@ -20,5 +20,5 @@ packages = list(map(str.strip, config['USAGE']['packages'].split(',')))
 class_regexp = config['USAGE']['class_regexp']
 print_strategy = 'html'
 host = args.host
-interval_in_munites = int(args.interval)
+interval_in_minutes = int(args.interval)
 port = int(args.port)

@@ -15,3 +15,9 @@ class ClassUsageDependency:
 
     def __str__(self):
         return self.name + ':' + str(self.classes)
+
+    def __eq__(self, other):
+        if not isinstance(other, ClassUsageDependency):
+            return NotImplemented
+
+        return self.name == other.name and self.classes == other.classes

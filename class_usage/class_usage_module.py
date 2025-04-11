@@ -30,3 +30,9 @@ class ClassUsageModule:
 
     def __str__(self):
         return self.name + ':' + self.version + ' Class usages: ' + str(self.dependencies)
+
+    def __eq__(self, other):
+        if not isinstance(other, ClassUsageModule):
+            return NotImplemented
+
+        return self.name == other.name  and self.version == other.version and self.dependencies == other.dependencies

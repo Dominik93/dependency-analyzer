@@ -2,7 +2,7 @@ import os
 from class_usage.class_usage_analyzer import ClassUsageAnalyzer
 from dependency.dependency_analyzer import DependenciesAnalyzer
 from dependency.os_executor import OsExecutor
-from dependency.maven import Maven
+from maven.maven import Maven
 from printer_manager import PrinterManager
 
 
@@ -30,9 +30,10 @@ def analyze_dependencies(server_path, modules, dependencies, prints_strategy):
     manager.get_dependency_printer().print()
 
 
-def analyze_class_usage(modules, packages, class_regexp, print_strategy):
-    class_usage_analyzer = ClassUsageAnalyzer(modules, packages, class_regexp)
+def analyze_class_usage(server_path, modules, packages, class_regexp, print_strategy):
+    maven = Maven(OsExecutor(), [])
+    class_usage_analyzer = ClassUsageAnalyzer(maven, modules, packages, class_regexp)
     class_usage_matrix = class_usage_analyzer.calculate_class_usage()
-    manager = PrinterManager(print_strategy)
+    manager = PrinterManager(print_strategy, server_path)
     manager.set_class_usage_matrix(class_usage_matrix)
-    manager.get_class_usage_printer().print_class_usage_matrix()
+    manager.get_class_usage_printer().print()

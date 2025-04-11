@@ -1,6 +1,6 @@
 import unittest
-from dependency.maven import Maven
-from tests.dependency.mock_executor import MockExecutor
+from maven.maven import Maven
+from tests.mock_executor import MockExecutor
 
 
 class MyTestCase(unittest.TestCase):

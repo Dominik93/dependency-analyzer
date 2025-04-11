@@ -1,6 +1,6 @@
 import os
 
-from dependency.executor import Executor
+from maven.executor import Executor
 
 
 class OsExecutor(Executor):

@@ -1,7 +1,7 @@
 import os
 import xmltodict
 
-from dependency.executor import Executor
+from maven.executor import Executor
 
 
 class Maven:

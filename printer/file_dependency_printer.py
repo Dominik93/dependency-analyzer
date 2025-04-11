@@ -1,13 +1,12 @@
-from ..dependency_matrix import DependencyMatrix
-
 
 class FileDependencyPrinter:
 
-    def __init__(self, content, dir_path):
+    def __init__(self, content, dir_path, file):
         self.content = content
         self.dir_path = dir_path
+        self.file = file
 
     def print(self):
-        f = open(self.dir_path + "/dependencies.html", 'w')
+        f = open(self.dir_path + "/" + self.file, 'w')
         f.write(self.content)
         f.close()

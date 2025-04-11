@@ -1,7 +1,7 @@
-from class_usage.printer.html_class_usage_printer import HtmlClassUsagePrinter
-from class_usage.printer.console_class_usage_printer import ConsoleClassUsagePrinter
-from dependency.printer.console_dependency_printer import ConsoleDependencyPrinter
-from dependency.printer.file_dependency_printer import FileDependencyPrinter
+from class_usage.printer.html_class_usage_factory import HtmlClassUsageFactory
+from class_usage.printer.plain_class_usage_factory import PlainClassUsageFactory
+from printer.console_dependency_printer import ConsoleDependencyPrinter
+from printer.file_dependency_printer import FileDependencyPrinter
 from dependency.printer.plain_dependency_factory import PlainDependencyFactory
 from dependency.printer.html_dependency_factory import HtmlDependencyFactory
 
@@ -17,17 +17,19 @@ class PrinterManager:
 
     def set_class_usage_matrix(self, class_usage_matrix):
         if self.print_strategy == 'html':
-            self.class_usage_printer = HtmlClassUsagePrinter(class_usage_matrix)
+            factory = HtmlClassUsageFactory(class_usage_matrix)
+            self.class_usage_printer = FileDependencyPrinter(factory.print_class_usage_matrix(), self.server_path, "class_usages.html")
         else:
-            self.class_usage_printer = ConsoleClassUsagePrinter(class_usage_matrix)
+            factory = PlainClassUsageFactory(class_usage_matrix)
+            self.class_usage_printer = ConsoleDependencyPrinter(factory.print_class_usage_matrix())
 
     def set_dependency_matrix(self, dependency_matrix):
         if self.print_strategy == 'html':
             factory = HtmlDependencyFactory(dependency_matrix)
-            self.dependency_printer = FileDependencyPrinter(factory.print_dependency_matrix(), self.server_path)
+            self.dependency_printer = FileDependencyPrinter(factory.print_dependency_matrix(), self.server_path, "dependencies.html")
         else:
-            dependency_factory = PlainDependencyFactory(dependency_matrix)
-            self.dependency_printer = ConsoleDependencyPrinter(dependency_factory.print_dependency_matrix())
+            factory = PlainDependencyFactory(dependency_matrix)
+            self.dependency_printer = ConsoleDependencyPrinter(factory.print_dependency_matrix())
 
     def get_class_usage_printer(self):
         return self.class_usage_printer

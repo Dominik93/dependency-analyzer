@@ -1,4 +1,4 @@
-from dependency.executor import Executor
+from maven.executor import Executor
 
 
 class MockExecutor(Executor):

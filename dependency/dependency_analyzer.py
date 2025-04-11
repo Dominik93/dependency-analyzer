@@ -1,5 +1,5 @@
 from .dependency_matrix import DependencyMatrix
-from .maven import Maven
+from maven.maven import Maven
 
 
 class DependenciesAnalyzer:

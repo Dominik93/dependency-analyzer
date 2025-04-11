@@ -1,5 +1,3 @@
-from ..dependency_matrix import DependencyMatrix
-
 
 class ConsoleDependencyPrinter:
 
