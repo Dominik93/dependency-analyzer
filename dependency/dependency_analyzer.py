@@ -8,24 +8,26 @@ class DependenciesAnalyzer:
     maven = {}
     dependency_matrix: DependencyMatrix = {}
 
-    def __init__(self, modules, dependencies):
+    def __init__(self, maven: Maven, modules: [], dependencies: []):
         print('Modules: ' + str(modules))
         print('Dependencies: ' + str(dependencies))
-        self.maven = Maven(dependencies)
+        self.maven = maven
         self.modules = modules
         self.dependency_matrix = DependencyMatrix(modules, dependencies)
         self.dependencies = dependencies
 
-    def calculate_dependencies(self):
+    def calculate_dependencies(self) -> DependencyMatrix:
         for module in self.modules:
             print('')
-            print('Analize ' + module)
+            print('Analyze ' + module)
             dependency_tree = self.maven.dependency_tree(module)
+            sanitized_dependency_tree = "\n".join(filter(lambda x: "[INFO]" in x, dependency_tree.splitlines()))
             self.dependency_matrix.set_module_version(module, self.maven.find_module_version(module))
             for dependency in self.dependencies:
-                if dependency in dependency_tree:
-                    index_of_dependency = dependency_tree.find(dependency)
-                    dependency_from_tree = dependency_tree[index_of_dependency: dependency_tree.find('\n', index_of_dependency)]
+                if dependency in sanitized_dependency_tree:
+                    index_of_dependency_start = sanitized_dependency_tree.find(dependency)
+                    index_of_dependency_end = sanitized_dependency_tree.find('\n', index_of_dependency_start)
+                    dependency_from_tree = sanitized_dependency_tree[index_of_dependency_start: index_of_dependency_end]
                     dependency_version = dependency_from_tree.split(':')[3]
                     self.dependency_matrix.set_dependency_version_in_module(module, dependency, dependency_version)
         return self.dependency_matrix

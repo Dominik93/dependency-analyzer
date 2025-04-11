@@ -15,3 +15,9 @@ class Dependency:
 
     def __str__(self):
         return self.name + ':' + self.version
+
+    def __eq__(self, other):
+        if not isinstance(other, Dependency):
+            return NotImplemented
+
+        return self.name == other.name and self.version == other.version

@@ -1,19 +1,21 @@
 from ..dependency_matrix import DependencyMatrix
 
 
-class HtmlDependencyPrinter:
+class HtmlDependencyFactory:
     dependency_matrix = {}
+
+    content = ""
 
     def __init__(self, dependency_matrix: DependencyMatrix):
         self.dependency_matrix = dependency_matrix
 
     def print_dependency_matrix(self):
-        f = open("server/dependencies.html", 'w')
-        f.write('<table id="modulesTable">\n<tbody>\n')
-        f.write(self.__print_headers())
-        f.write(self.__print_content())
-        f.write('</tbody>\n</table>\n')
-        f.close()
+        self.content = ""
+        self.content += '<table id="modulesTable">\n<tbody>\n'
+        self.content += self.__print_headers()
+        self.content += self.__print_content()
+        self.content += '</tbody>\n</table>\n'
+        return self.content
 
     def __print_headers(self):
         dependencies_headers = '<tr class="header">\n' + self.__add_tag('', 'th')

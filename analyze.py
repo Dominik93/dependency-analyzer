@@ -1,6 +1,8 @@
 import os
 from class_usage.class_usage_analyzer import ClassUsageAnalyzer
 from dependency.dependency_analyzer import DependenciesAnalyzer
+from dependency.os_executor import OsExecutor
+from dependency.maven import Maven
 from printer_manager import PrinterManager
 
 
@@ -19,12 +21,13 @@ def remove_projects(modules):
         os.popen('rd /s /q "' + project_path + '"')
 
 
-def analyze_dependencies(modules, dependencies, prints_strategy):
-    dependencies_analyzer = DependenciesAnalyzer(modules, dependencies)
+def analyze_dependencies(server_path, modules, dependencies, prints_strategy):
+    maven = Maven(OsExecutor(), dependencies)
+    dependencies_analyzer = DependenciesAnalyzer(maven, modules, dependencies)
     dependency_matrix = dependencies_analyzer.calculate_dependencies()
-    manager = PrinterManager(prints_strategy)
+    manager = PrinterManager(prints_strategy, server_path)
     manager.set_dependency_matrix(dependency_matrix)
-    manager.get_dependency_printer().print_dependency_matrix()
+    manager.get_dependency_printer().print()
 
 
 def analyze_class_usage(modules, packages, class_regexp, print_strategy):

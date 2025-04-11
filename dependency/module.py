@@ -30,3 +30,9 @@ class Module:
 
     def __str__(self):
         return self.name + ':' + self.version + ' Dependencies: ' + str(self.dependencies)
+
+    def __eq__(self, other):
+        if not isinstance(other, Module):
+            return NotImplemented
+
+        return self.name == other.name and self.version == other.version and self.dependencies == other.dependencies

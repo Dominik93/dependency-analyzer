@@ -43,3 +43,9 @@ class DependencyMatrix:
 
     def __str__(self):
         return str(self.modules)
+
+    def __eq__(self, other):
+        if not isinstance(other, DependencyMatrix):
+            return NotImplemented
+
+        return self.modules == other.modules and self.dependencies == other.dependencies
