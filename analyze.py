@@ -33,8 +33,7 @@ def analyze_dependencies(server_path: str, modules: list[str], dependencies: lis
 
 def analyze_class_usage(server_path: str, modules: list[str], packages: list[str], class_regexp: str,
                         print_strategy: str) -> None:
-    maven = Maven(OsExecutor(), [])
-    class_usage_analyzer = ClassUsageAnalyzer(maven, modules, packages, class_regexp)
+    class_usage_analyzer = ClassUsageAnalyzer(modules, packages, class_regexp)
     class_usage_matrix = class_usage_analyzer.calculate_class_usage()
     manager = PrinterManager(print_strategy, server_path)
     manager.set_class_usage_matrix(class_usage_matrix)

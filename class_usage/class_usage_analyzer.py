@@ -1,7 +1,7 @@
 import os
 import re
 
-from maven.maven import Maven
+from maven.pom_loader import find_module_version
 from .class_usage_matrix import ClassUsageMatrix
 
 
@@ -13,9 +13,8 @@ class ClassUsageAnalyzer:
 
     matrix: ClassUsageMatrix = {}
 
-    def __init__(self, maven: Maven, modules: list[str], packages: list[str], class_regexp: str):
+    def __init__(self, modules: list[str], packages: list[str], class_regexp: str):
         self.matrix = ClassUsageMatrix(modules, packages)
-        self.maven = maven
         self.modules = modules
         self.packages = packages
         self.class_regexp = class_regexp
@@ -24,7 +23,7 @@ class ClassUsageAnalyzer:
         for module in self.modules:
             project_path = os.getcwd() + '/temp/' + module
             print('Analyze ' + module)
-            self.matrix.set_module_version(module, self.maven.find_module_version(module))
+            self.matrix.set_module_version(module, find_module_version(module))
             for (dirpath, dirnames, filenames) in os.walk(project_path):
                 for file in filenames:
                     if '.java' in file:
