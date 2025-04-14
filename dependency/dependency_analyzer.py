@@ -17,12 +17,12 @@ class DependenciesAnalyzer:
         self.dependency_matrix = DependencyMatrix(modules, dependencies)
         self.dependencies = dependencies
 
-    def calculate_dependencies(self) -> DependencyMatrix:
+    def calculate_dependencies(self, directory) -> DependencyMatrix:
         for module in self.modules:
             print('\nAnalyze ' + module)
             dependency_tree = self.maven.dependency_tree(module)
             sanitized_dependency_tree = "\n".join(filter(lambda x: "[INFO]" in x, dependency_tree.splitlines()))
-            self.dependency_matrix.set_module_version(module, find_module_version(module))
+            self.dependency_matrix.set_module_version(module, find_module_version(directory, module))
             for dependency in self.dependencies:
                 if dependency in sanitized_dependency_tree:
                     index_of_dependency_start = sanitized_dependency_tree.find(dependency)

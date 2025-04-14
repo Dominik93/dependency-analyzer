@@ -9,6 +9,7 @@ parser.add_argument("--only-include-dependencies", help='Ignore dependencies in 
 parser.add_argument("--search-class-usage", help='Serac form class usage in modules', action='store_true')
 parser.add_argument("--no-clean-up", help='Remove all projects', action='store_false')
 parser.add_argument("--print", choices=['console', 'html'], help='Strategy of printing', default='console')
+parser.add_argument("--directory", help='Directory where modules will be cloned', default='')
 
 args = parser.parse_args()
 
@@ -24,6 +25,7 @@ search_class_usage: bool = args.search_class_usage
 module: list[str] = []
 dependencies: list[str] = []
 packages: list[str] = []
+directory: str
 
 if len(args.only_include_modules) == 0:
     modules = list(map(str.strip, config['MODULES']['modules'].split(',')))
@@ -34,6 +36,8 @@ if len(args.only_include_dependencies) == 0:
     dependencies = list(map(str.strip, config['DEPENDENCY']['dependencies'].split(',')))
 else:
     dependencies = list(map(str.strip, args.only_include_dependencies.split(',')))
+
+directory = args.directory
 
 packages = list(map(str.strip, config['USAGE']['packages'].split(',')))
 

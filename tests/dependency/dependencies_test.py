@@ -5,9 +5,11 @@ from maven.maven import Maven
 from tests.mock_executor import MockExecutor
 
 
+directory = "./resources"
+
 class MyTestCase(unittest.TestCase):
     def test_dependencies_analyzer_single_module_single_dependency(self):
-        mock = {"mvn -f /path/temp/resources/first dependency:tree -Dincludes=com.sample.first:dependency":
+        mock = {"mvn -f ./resources/first dependency:tree -Dincludes=com.sample.first:dependency":
                     '''
                     [INFO] Scanning for projects...
                     [INFO] 
@@ -26,20 +28,20 @@ class MyTestCase(unittest.TestCase):
                     [INFO] Finished at: 2025-04-10T19:53:52+02:00
                     [INFO] ------------------------------------------------------------------------
                     '''}
-        modules = ['resources/first']
+        modules = ['first']
         dependencies = ['com.sample.first:dependency']
-        maven = Maven(MockExecutor("/path", mock), dependencies)
+        maven = Maven(directory, MockExecutor(mock), dependencies)
         analyzer = DependenciesAnalyzer(maven, modules, dependencies)
-        actual = analyzer.calculate_dependencies()
+        actual = analyzer.calculate_dependencies(directory)
 
         expected = DependencyMatrix(modules, dependencies)
-        expected.set_module_version("resources/first", "0.0.1")
-        expected.set_dependency_version_in_module("resources/first", 'com.sample.first:dependency', "1.0.0")
+        expected.set_module_version("first", "0.0.1")
+        expected.set_dependency_version_in_module("first", 'com.sample.first:dependency', "1.0.0")
         self.assertEqual(actual, expected)
 
     def test_dependencies_analyzer_single_module_multiple_dependency(self):
         mock = {
-            "mvn -f /path/temp/resources/first dependency:tree -Dincludes=com.sample.first:dependency,com.sample.second:dependency":
+            "mvn -f ./resources/first dependency:tree -Dincludes=com.sample.first:dependency,com.sample.second:dependency":
                 '''
                     [INFO] Scanning for projects...
                     [INFO] 
@@ -59,21 +61,21 @@ class MyTestCase(unittest.TestCase):
                     [INFO] Finished at: 2025-04-10T19:56:02+02:00
                     [INFO] ------------------------------------------------------------------------
                     '''}
-        modules = ['resources/first']
+        modules = ['first']
         dependencies = ['com.sample.first:dependency', 'com.sample.second:dependency']
-        maven = Maven(MockExecutor("/path", mock), dependencies)
+        maven = Maven(directory, MockExecutor(mock), dependencies)
         analyzer = DependenciesAnalyzer(maven, modules, dependencies)
-        actual = analyzer.calculate_dependencies()
+        actual = analyzer.calculate_dependencies(directory)
 
         expected = DependencyMatrix(modules, dependencies)
-        expected.set_module_version("resources/first", "0.0.1")
-        expected.set_dependency_version_in_module("resources/first", 'com.sample.first:dependency', "1.0.0")
-        expected.set_dependency_version_in_module("resources/first", 'com.sample.second:dependency', "2.0.0")
+        expected.set_module_version("first", "0.0.1")
+        expected.set_dependency_version_in_module("first", 'com.sample.first:dependency', "1.0.0")
+        expected.set_dependency_version_in_module("first", 'com.sample.second:dependency', "2.0.0")
         self.assertEqual(actual, expected)
 
     def test_dependencies_analyzer_multiple_module_multiple_dependency(self):
         mock = {
-            "mvn -f /path/temp/resources/first dependency:tree -Dincludes=com.sample.first:dependency,com.sample.second:dependency":
+            "mvn -f ./resources/first dependency:tree -Dincludes=com.sample.first:dependency,com.sample.second:dependency":
                 '''
                     [INFO] Scanning for projects...
                     [INFO] 
@@ -93,7 +95,7 @@ class MyTestCase(unittest.TestCase):
                     [INFO] Finished at: 2025-04-09T19:31:37+02:00
                     [INFO] ------------------------------------------------------------------------
                     ''',
-            "mvn -f /path/temp/resources/second dependency:tree -Dincludes=com.sample.first:dependency,com.sample.second:dependency":
+            "mvn -f ./resources/second dependency:tree -Dincludes=com.sample.first:dependency,com.sample.second:dependency":
                 '''
                     [INFO] Scanning for projects...
                     [INFO] 
@@ -113,19 +115,19 @@ class MyTestCase(unittest.TestCase):
                     [INFO] Finished at: 2025-04-09T19:31:37+02:00
                     [INFO] ------------------------------------------------------------------------
                     '''}
-        modules = ['resources/first', 'resources/second']
+        modules = ['first', 'second']
         dependencies = ['com.sample.first:dependency', 'com.sample.second:dependency']
-        maven = Maven(MockExecutor("/path", mock), dependencies)
+        maven = Maven(directory, MockExecutor(mock), dependencies)
         analyzer = DependenciesAnalyzer(maven, modules, dependencies)
-        actual = analyzer.calculate_dependencies()
+        actual = analyzer.calculate_dependencies(directory)
 
         expected = DependencyMatrix(modules, dependencies)
-        expected.set_module_version("resources/first", "0.0.1")
-        expected.set_module_version("resources/second", "0.0.2")
-        expected.set_dependency_version_in_module("resources/first", 'com.sample.first:dependency', "1.0.0")
-        expected.set_dependency_version_in_module("resources/first", 'com.sample.second:dependency', "2.0.0")
-        expected.set_dependency_version_in_module("resources/second", 'com.sample.first:dependency', "2.0.0")
-        expected.set_dependency_version_in_module("resources/second", 'com.sample.second:dependency', "2.0.0")
+        expected.set_module_version("first", "0.0.1")
+        expected.set_module_version("second", "0.0.2")
+        expected.set_dependency_version_in_module("first", 'com.sample.first:dependency', "1.0.0")
+        expected.set_dependency_version_in_module("first", 'com.sample.second:dependency', "2.0.0")
+        expected.set_dependency_version_in_module("second", 'com.sample.first:dependency', "2.0.0")
+        expected.set_dependency_version_in_module("second", 'com.sample.second:dependency', "2.0.0")
         self.assertEqual(actual, expected)
 
 

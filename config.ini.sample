@@ -8,3 +8,5 @@ dependencies = group_id:artifact_id, group_id:artifact_id
 [USAGE]
 packages = com.packages.artefact, com.packages.other.artefact
 class_regexp = regexp
+[DIRECTORY]
+directory =

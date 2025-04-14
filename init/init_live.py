@@ -6,6 +6,7 @@ parser.add_argument("--config-file", help='Configuration file, default config.in
 parser.add_argument("--host", help='Host', default='')
 parser.add_argument("--port", help='Port', default=8080)
 parser.add_argument("--interval", help='Interval', default=30)
+parser.add_argument("--directory", help='Directory where modules will be cloned', default='')
 
 args = parser.parse_args()
 
@@ -22,3 +23,4 @@ print_strategy: str = 'html'
 host: str = args.host
 interval_in_minutes: int = int(args.interval)
 port: int = int(args.port)
+directory = args.directory

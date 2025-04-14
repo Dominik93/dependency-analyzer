@@ -19,11 +19,11 @@ class ClassUsageAnalyzer:
         self.packages = packages
         self.class_regexp = class_regexp
 
-    def calculate_class_usage(self) -> ClassUsageMatrix:
+    def calculate_class_usage(self, directory: str) -> ClassUsageMatrix:
         for module in self.modules:
-            project_path = os.getcwd() + '/temp/' + module
+            project_path = directory + '/' + module
             print('Analyze ' + module)
-            self.matrix.set_module_version(module, find_module_version(module))
+            self.matrix.set_module_version(module, find_module_version(directory, module))
             for (dirpath, dirnames, filenames) in os.walk(project_path):
                 for file in filenames:
                     if '.java' in file:
