@@ -7,6 +7,8 @@ class FileDependencyPrinter:
         self.file = file
 
     def print(self):
-        f = open(self.dir_path + "/" + self.file, 'w')
+        file = self.dir_path + "/" + self.file
+        print(f'Write to {file}')
+        f = open(file, 'w')
         f.write(self.content)
         f.close()

@@ -20,6 +20,8 @@ if __name__ == '__main__':
     server_thread = threading.Thread(target=start_server, args=(host, port, Handler))
     server_thread.daemon = True
     server_thread.start()
+    analyze_dependencies(directory, server_path, modules, dependencies, print_strategy)
+    analyze_class_usage(directory, server_path, modules, packages, class_regexp, print_strategy)
 
     schedule.every(interval_in_minutes).minutes.do(
         lambda: analyze_dependencies(directory, server_path, modules, dependencies, print_strategy))

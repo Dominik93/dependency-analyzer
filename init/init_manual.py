@@ -45,4 +45,5 @@ class_regexp: str = config['USAGE']['class_regexp']
 
 print_strategy: str = args.print
 
-print(dependencies)
+print(f"Git configuration {git_url} {branch}")
+print(f"Analyzing configuration {modules} {dependencies} {packages} {class_regexp} {print_strategy}")

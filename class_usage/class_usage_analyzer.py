@@ -22,12 +22,13 @@ class ClassUsageAnalyzer:
     def calculate_class_usage(self, directory: str) -> ClassUsageMatrix:
         for module in self.modules:
             project_path = directory + '/' + module
-            print('Analyze ' + module)
+            print(f'Analyze class usage {directory}/{module}')
             self.matrix.set_module_version(module, find_module_version(directory, module))
             for (dirpath, dirnames, filenames) in os.walk(project_path):
                 for file in filenames:
                     if '.java' in file:
                         path = dirpath + '\\' + file
+                        print(f'Analyze {path}')
                         f = open(path, "r", encoding="utf8")
                         lines = f.readlines()
                         f.close()

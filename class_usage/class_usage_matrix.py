@@ -19,9 +19,6 @@ class ClassUsageMatrix:
                 matrix[module].add_dependency(ClassUsageDependency(dependency))
         return matrix
 
-    def add_module(self, module: ClassUsageModule):
-        self.modules[module.name] = module
-
     def get_module(self, module_name):
         return self.modules[module_name]
 
@@ -29,10 +26,11 @@ class ClassUsageMatrix:
         return self.get_module(module_name).get_dependency(dependency_name)
 
     def set_module_version(self, module_name, version):
+        print(f'Set version of {module_name} to {version}')
         self.modules[module_name].set_version(version)
 
     def add_dependency_class_in_module(self, module_name: str, dependency_name: str, a_class: str):
-        print('To ' + module_name + ' add ' + dependency_name + ' with package ' + a_class)
+        print(f'To {module_name} add {dependency_name} with class {a_class}')
         self.modules[module_name].add_dependency_class(dependency_name, a_class)
 
     def get_all_modules(self):

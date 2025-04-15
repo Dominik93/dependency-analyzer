@@ -10,8 +10,8 @@ class DependenciesAnalyzer:
     dependency_matrix: DependencyMatrix = {}
 
     def __init__(self, maven: Maven, modules: list[str], dependencies: list[str]):
-        print('Modules: ' + str(modules))
-        print('Dependencies: ' + str(dependencies))
+        print(f'Modules: {modules}')
+        print(f'Dependencies: {dependencies}')
         self.maven = maven
         self.modules = modules
         self.dependency_matrix = DependencyMatrix(modules, dependencies)
@@ -19,7 +19,7 @@ class DependenciesAnalyzer:
 
     def calculate_dependencies(self, directory) -> DependencyMatrix:
         for module in self.modules:
-            print('\nAnalyze ' + module)
+            print(f'\nAnalyze dependencies {directory}/{module}')
             dependency_tree = self.maven.dependency_tree(module)
             sanitized_dependency_tree = "\n".join(filter(lambda x: "[INFO]" in x, dependency_tree.splitlines()))
             self.dependency_matrix.set_module_version(module, find_module_version(directory, module))
