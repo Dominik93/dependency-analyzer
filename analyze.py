@@ -8,14 +8,24 @@ from printer_manager import PrinterManager
 
 
 def clone_all_projects(directory: str, git_url: str, branch: str, modules: list[str]) -> None:
+    print(f'Initialize projects')
     for module in modules:
         project_path = directory + '/' + module
-        clone = 'git clone ' + git_url + '/' + module + ' ' + project_path
-        checkout = 'git -C ' + project_path + ' checkout ' + branch
-        pull = 'git -C ' + project_path + ' pull '
-        os.popen(clone).read()
-        os.popen(checkout).read()
-        os.popen(pull).read()
+        clone_command = 'git clone ' + git_url + '/' + module + ' ' + project_path
+        checkout_command = 'git -C ' + project_path + ' checkout ' + branch
+        pull_command = 'git -C ' + project_path + ' pull '
+        current_branch_command = 'git -C ' + project_path + ' branch --show-current '
+        print(f'Execute {clone_command}')
+        os.popen(clone_command).read()
+        print(f'Execute {current_branch_command}')
+        current_branch = os.popen(current_branch_command).read()
+        print(f'Current branch {current_branch}')
+        if current_branch == branch:
+            print(f'Execute {checkout_command}')
+            os.popen(checkout_command).read()
+            print(f'Execute {pull_command}')
+            os.popen(pull_command).read()
+    print(f'Projects initialized')
 
 
 def remove_projects(directory: str, modules: list[str]) -> None:
