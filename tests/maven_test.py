@@ -3,10 +3,10 @@ from maven.maven import Maven
 from tests.mock_executor import MockExecutor
 
 
-class MyTestCase(unittest.TestCase):
+class MavenTestCase(unittest.TestCase):
     def test_maven(self):
-        mock = {"mvn -f /path/temp/sample dependency:tree -Dincludes=com.sample:dependency": "response"}
-        maven = Maven(MockExecutor("/path", mock), ["com.sample:dependency"])
+        mock = {"mvn -f /path/sample dependency:tree -Dincludes=com.sample:dependency": "response"}
+        maven = Maven("/path", MockExecutor(mock), ["com.sample:dependency"])
 
         actual = maven.dependency_tree("sample")
 
