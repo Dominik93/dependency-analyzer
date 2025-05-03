@@ -1,7 +1,9 @@
 import os
 
 from class_usage.class_usage_analyzer import ClassUsageAnalyzer
+from class_usage.class_usage_matrix import ClassUsageMatrix
 from dependency.dependency_analyzer import DependenciesAnalyzer
+from dependency.dependency_matrix import DependencyMatrix
 from dependency.os_executor import OsExecutor
 from maven.maven import Maven
 from printer_manager import PrinterManager
@@ -35,20 +37,12 @@ def remove_projects(directory: str, modules: list[str]) -> None:
         os.popen('rd /s /q "' + project_path + '"')
 
 
-def analyze_dependencies(directory: str, server_path: str, modules: list[str], dependencies: list[str],
-                         prints_strategy: str) -> None:
+def analyze_dependencies(directory: str, modules: list[str], dependencies: list[str]) -> DependencyMatrix:
     maven = Maven(directory, OsExecutor(), dependencies)
     dependencies_analyzer = DependenciesAnalyzer(maven, modules, dependencies)
-    dependency_matrix = dependencies_analyzer.calculate_dependencies(directory)
-    manager = PrinterManager(prints_strategy, server_path)
-    manager.set_dependency_matrix(dependency_matrix)
-    manager.get_dependency_printer().print()
+    return dependencies_analyzer.calculate_dependencies(directory)
 
 
-def analyze_class_usage(directory: str, server_path: str, modules: list[str], packages: list[str], class_regexp: str,
-                        print_strategy: str) -> None:
+def analyze_class_usage(directory: str, modules: list[str], packages: list[str], class_regexp: str) -> ClassUsageMatrix:
     class_usage_analyzer = ClassUsageAnalyzer(modules, packages, class_regexp)
-    class_usage_matrix = class_usage_analyzer.calculate_class_usage(directory)
-    manager = PrinterManager(print_strategy, server_path)
-    manager.set_class_usage_matrix(class_usage_matrix)
-    manager.get_class_usage_printer().print()
+    return class_usage_analyzer.calculate_class_usage(directory)

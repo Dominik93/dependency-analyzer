@@ -1,5 +1,7 @@
-from .class_usage_module import ClassUsageModule
+from typing import Callable
+
 from .class_usage_dependency import ClassUsageDependency
+from .class_usage_module import ClassUsageModule
 
 
 class ClassUsageMatrix:
@@ -35,6 +37,9 @@ class ClassUsageMatrix:
 
     def get_all_modules(self):
         return self.modules.keys()
+
+    def get_modules(self, filter_fn: Callable):
+        return list(filter(filter_fn, self.get_all_modules()))
 
     def __repr__(self):
         return self.__str__()

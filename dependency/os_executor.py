@@ -6,5 +6,5 @@ from maven.executor import Executor
 class OsExecutor(Executor):
 
     def execute(self, command) -> str:
-        print(f'execute: {command}')
+        print(f'execute: {command[:60]}')
         return os.popen(command).read()

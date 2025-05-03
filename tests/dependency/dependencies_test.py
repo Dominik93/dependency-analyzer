@@ -7,7 +7,7 @@ from tests.mock_executor import MockExecutor
 
 directory = "./resources"
 
-class MyTestCase(unittest.TestCase):
+class DependenciesTestCase(unittest.TestCase):
     def test_dependencies_analyzer_single_module_single_dependency(self):
         mock = {"mvn -f ./resources/first dependency:tree -Dincludes=com.sample.first:dependency":
                     '''

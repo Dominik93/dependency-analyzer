@@ -1,5 +1,5 @@
 
-class FileDependencyPrinter:
+class FilePrinter:
 
     def __init__(self, content: str, dir_path: str, file: str):
         self.content = content

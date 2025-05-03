@@ -1,11 +1,11 @@
 import unittest
 from dependency.dependency_matrix import DependencyMatrix
-from dependency.printer.html_dependency_factory import HtmlDependencyFactory
-from dependency.printer.plain_dependency_factory import PlainDependencyFactory
+from dependency.content.html_dependency_content_provider import HtmlDependencyContentProvider
+from dependency.content.plain_dependency_content_provider import PlainDependencyContentProvider
 
 
-class MyTestCase(unittest.TestCase):
-    def test_console_printer(self):
+class ContentTestCase(unittest.TestCase):
+    def test_console_content_provider(self):
         modules = ['sample', 'other']
         dependencies = ['com.sample:dependency', 'com.sample.other:dependency']
         matrix = DependencyMatrix(modules, dependencies)
@@ -16,8 +16,8 @@ class MyTestCase(unittest.TestCase):
         matrix.set_dependency_version_in_module("other", 'com.sample:dependency', "2.0.0")
         matrix.set_dependency_version_in_module("other", 'com.sample.other:dependency', "2.0.0")
 
-        printer = PlainDependencyFactory(matrix)
-        actual = printer.print_dependency_matrix()
+        printer = PlainDependencyContentProvider(matrix)
+        actual = printer.get_content()
         self.assertEqual('''Dependency matrix:
               |  dependency  |  dependency  |  
 -----------------------------------------------
@@ -25,7 +25,7 @@ sample 0.0.1  |  1.0.0       |  2.0.0       |
 other 0.0.2   |  2.0.0       |  2.0.0       |  
 -----------------------------------------------''', actual)
 
-    def test_html_printer(self):
+    def test_html_content_provider(self):
         modules = ['first', 'second']
         dependencies = ['com.sample.first:dependency', 'com.sample.second:dependency']
         matrix = DependencyMatrix(modules, dependencies)
@@ -36,8 +36,8 @@ other 0.0.2   |  2.0.0       |  2.0.0       |
         matrix.set_dependency_version_in_module("second", 'com.sample.first:dependency', "2.0.0")
         matrix.set_dependency_version_in_module("second", 'com.sample.second:dependency', "2.0.0")
 
-        printer = HtmlDependencyFactory(matrix)
-        actual = printer.print_dependency_matrix()
+        printer = HtmlDependencyContentProvider(matrix)
+        actual = printer.get_content()
         self.assertEqual('''<table id="modulesTable">
 <tbody>
 <tr class="header">

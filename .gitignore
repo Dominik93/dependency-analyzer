@@ -134,5 +134,6 @@ dmypy.json
 
 server/class_usages.html
 server/dependencies.html
+server/modules.html
 exmaple/*
 /.idea/

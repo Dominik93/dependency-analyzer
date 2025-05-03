@@ -1,3 +1,5 @@
+from typing import Callable
+
 from .module import Module
 from .dependency import Dependency
 
@@ -39,6 +41,8 @@ class DependencyMatrix:
     def get_all_modules(self):
         return self.modules.keys()
 
+    def get_modules(self, filter_fn: Callable):
+        return list(filter(filter_fn, self.get_all_modules()))
     def __repr__(self):
         return self.__str__()
 

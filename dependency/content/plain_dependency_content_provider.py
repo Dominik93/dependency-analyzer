@@ -1,7 +1,7 @@
 from ..dependency_matrix import DependencyMatrix
 
 
-class PlainDependencyFactory:
+class PlainDependencyContentProvider:
     SEPARATOR: str = '  |  '
     ROW_SEPARATOR: str = '-----'
 
@@ -12,7 +12,7 @@ class PlainDependencyFactory:
         self.dependency_width = len(max(map(self.__retrieve_dependency, self.dependency_matrix.dependencies), key=len))
         self.content = ""
 
-    def print_dependency_matrix(self) -> str:
+    def get_content(self) -> str:
         self.content = 'Dependency matrix:\n'
         self.content += self.__print_headers() + "\n"
         self.content += self.__print_row_separator() + "\n"

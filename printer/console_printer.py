@@ -1,5 +1,5 @@
 
-class ConsoleDependencyPrinter:
+class ConsolePrinter:
 
     def __init__(self, content: str):
         self.content = content

@@ -6,7 +6,7 @@ from class_usage.class_usage_matrix import ClassUsageMatrix
 directory = "./resources"
 
 
-class MyTestCase(unittest.TestCase):
+class ClassUsageTestCase(unittest.TestCase):
     def test_analyze_class_usage(self):
         modules = ['first']
         packages = ["com.package.artifact"]

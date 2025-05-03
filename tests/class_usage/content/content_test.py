@@ -1,25 +1,25 @@
 import unittest
 
 from class_usage.class_usage_matrix import ClassUsageMatrix
-from class_usage.printer.html_class_usage_factory import HtmlClassUsageFactory
-from class_usage.printer.plain_class_usage_factory import PlainClassUsageFactory
+from class_usage.content.html_class_usage_content_provider import HtmlClassUsageContentProvider
+from class_usage.content.plain_class_usage_content_provider import PlainClassUsageContentProvider
 
 
-class MyTestCase(unittest.TestCase):
-    def test_plain_printer(self):
+class ContentProviderTestCase(unittest.TestCase):
+    def test_plain_content_provider(self):
         modules = ['first']
         packages = ["com.package.artifact"]
         matrix = ClassUsageMatrix(modules, packages)
         matrix.add_dependency_class_in_module("first", "com.package.artifact",
                                               "com.package.artifact.api.Class2")
 
-        printer = PlainClassUsageFactory(matrix)
-        actual = printer.print_class_usage_matrix()
+        printer = PlainClassUsageContentProvider(matrix)
+        actual = printer.get_content()
         self.assertEqual(
             "Class usage matrix:{'first': first:unknown Class usages: {'com.package.artifact': com.package.artifact:{'com.package.artifact.api.Class2'}}}",
             actual)
 
-    def test_html_printer(self):
+    def test_html_content_provider(self):
         modules = ['first']
         packages = ["com.package.artifact"]
         matrix = ClassUsageMatrix(modules, packages)
@@ -27,8 +27,8 @@ class MyTestCase(unittest.TestCase):
         matrix.add_dependency_class_in_module("first", "com.package.artifact",
                                               "com.package.artifact.api.Class2")
 
-        printer = HtmlClassUsageFactory(matrix)
-        actual = printer.print_class_usage_matrix()
+        printer = HtmlClassUsageContentProvider(matrix)
+        actual = printer.get_content()
         self.assertEqual('''<table id="classUsagesTable">
 <tbody>
 <tr class="header">
