@@ -36,7 +36,7 @@ other 0.0.2   |  2.0.0       |  2.0.0       |
         matrix.set_dependency_version_in_module("second", 'com.sample.first:dependency', "2.0.0")
         matrix.set_dependency_version_in_module("second", 'com.sample.second:dependency', "2.0.0")
 
-        printer = HtmlDependencyContentProvider(matrix)
+        printer = HtmlDependencyContentProvider(matrix, "modulesTable")
         actual = printer.get_content()
         self.assertEqual('''<table id="modulesTable">
 <tbody>

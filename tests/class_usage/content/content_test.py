@@ -27,7 +27,7 @@ class ContentProviderTestCase(unittest.TestCase):
         matrix.add_dependency_class_in_module("first", "com.package.artifact",
                                               "com.package.artifact.api.Class2")
 
-        printer = HtmlClassUsageContentProvider(matrix)
+        printer = HtmlClassUsageContentProvider(matrix, "classUsagesTable")
         actual = printer.get_content()
         self.assertEqual('''<table id="classUsagesTable">
 <tbody>
