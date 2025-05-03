@@ -7,10 +7,12 @@
     <script>
         $(function () {
           $("#includedModules").load("modules.html", function() {
-              enable_collapsible()
+            $("#includedDependencies").load("dependencies.html", function() {
+              $("#includedClassUsage").load("class_usages.html", function() {
+                enable_collapsible()
+              });
             });
-          $("#includedDependencies").load("dependencies.html");
-          $("#includedClassUsage").load("class_usages.html");
+          });
         });
     </script>
     <style>
@@ -128,13 +130,11 @@
 
 <script>
 
-    function enable_collapsible() {
-        console.log('enable_collapsible')
+    function enable_collapsible(test) {
         var coll = document.getElementsByClassName("collapsible");
         var i;
 
         for (i = 0; i < coll.length; i++) {
-            console.log('col', coll[i])
           coll[i].addEventListener("click", function() {
             this.classList.toggle("active");
             var content = this.nextElementSibling;

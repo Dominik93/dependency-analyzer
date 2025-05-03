@@ -14,8 +14,8 @@ class HtmlModulesContentProvider:
         for module in self.modules:
             content += f'<button type="button" class="collapsible">{module}</button>'
             content += f'<div class="content">'
-            content += HtmlClassUsageContentProvider(self.class_usage_matrix, lambda x: x == module).get_content()
             content += HtmlDependencyContentProvider(self.dependency_matrix, lambda x: x == module).get_content()
+            content += HtmlClassUsageContentProvider(self.class_usage_matrix, lambda x: x == module).get_content()
             content += f'</div>'
             content += f"</br></br>"
         return content

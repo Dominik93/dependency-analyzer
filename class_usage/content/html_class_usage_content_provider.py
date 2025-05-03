@@ -61,7 +61,10 @@ class HtmlClassUsageContentProvider:
         return string.split(':')[0]
 
     def __classes_to_html(self, classes):
-        content = ''
-        for a_class in classes:
-            content += a_class + '\n'
+        if len(classes) == 0:
+            return ''
+        content = f'<button type="button" class="collapsible">toggle</button>'
+        content += f'<div class="content">'
+        content += '\n'.join(classes)
+        content += f'</div>'
         return content
