@@ -8,13 +8,14 @@ class HtmlClassUsageContentProvider:
     content = ""
     modules_filter: Callable
 
-    def __init__(self, class_usage_matrix: ClassUsageMatrix, modules_filter: Callable = None):
+    def __init__(self, class_usage_matrix: ClassUsageMatrix, element_id=None, modules_filter: Callable = None):
         self.class_usage_matrix = class_usage_matrix
+        self.element_id = element_id
         self.modules_filter = modules_filter if modules_filter is not None else lambda x: True
 
     def get_content(self):
         self.content = ""
-        self.content += '<table id="classUsagesTable">\n<tbody>\n'
+        self.content += f'<table id="{self.element_id}">\n<tbody>\n'
         self.content += self.__print_headers()
         self.content += self.__print_content()
         self.content += '</tbody>\n</table>\n'
@@ -48,12 +49,12 @@ class HtmlClassUsageContentProvider:
             modules_with_version.append(module + ' ' + self.class_usage_matrix.get_module(module).version)
         return modules_with_version
 
-
     def _dependency_filter(self, dependency):
         for module in self.class_usage_matrix.get_modules(self.modules_filter):
             if len(self.class_usage_matrix.get_module(module).get_dependency(dependency).classes) != 0:
                 return True
         return False
+
     def __add_tag(self, string, tag):
         return '<' + tag + '>' + string + '</' + tag + '>\n'
 

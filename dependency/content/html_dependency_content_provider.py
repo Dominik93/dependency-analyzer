@@ -8,13 +8,14 @@ class HtmlDependencyContentProvider:
     content: str = ""
     modules_filter: Callable
 
-    def __init__(self, dependency_matrix: DependencyMatrix, modules_filter: Callable = None):
+    def __init__(self, dependency_matrix: DependencyMatrix, element_id=None, modules_filter: Callable = None):
         self.dependency_matrix = dependency_matrix
+        self.element_id = element_id
         self.modules_filter = modules_filter if modules_filter is not None else lambda x: True
 
     def get_content(self):
         self.content = ""
-        self.content += '<table id="modulesTable">\n<tbody>\n'
+        self.content += f'<table id="{self.element_id}">\n<tbody>\n'
         self.content += self.__print_headers()
         self.content += self.__print_content()
         self.content += '</tbody>\n</table>\n'

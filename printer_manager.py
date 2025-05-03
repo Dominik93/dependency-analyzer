@@ -23,7 +23,7 @@ class PrinterManager:
 
     def set_class_usage_matrix(self, class_usage_matrix: ClassUsageMatrix):
         if self.print_strategy == 'html':
-            factory = HtmlClassUsageContentProvider(class_usage_matrix)
+            factory = HtmlClassUsageContentProvider(class_usage_matrix, element_id="classUsagesTable")
             self.class_usage_printer = FilePrinter(factory.get_content(), self.server_path, "class_usages.html")
         else:
             factory = PlainClassUsageContentProvider(class_usage_matrix)
@@ -31,7 +31,7 @@ class PrinterManager:
 
     def set_dependency_matrix(self, dependency_matrix: DependencyMatrix):
         if self.print_strategy == 'html':
-            factory = HtmlDependencyContentProvider(dependency_matrix)
+            factory = HtmlDependencyContentProvider(dependency_matrix, element_id="dependenciesTable")
             self.dependency_printer = FilePrinter(factory.get_content(), self.server_path, "dependencies.html")
         else:
             factory = PlainDependencyContentProvider(dependency_matrix)

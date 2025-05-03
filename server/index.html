@@ -31,25 +31,25 @@
           margin-bottom: 12px;
         }
 
-        #modulesTable {
+        #dependenciesTable {
           border-collapse: collapse;
           width: 100%;
           border: 1px solid #ddd;
           font-size: 18px;
         }
 
-        #modulesTable th,
-        #modulesTable td {
+        #dependenciesTable th,
+        #dependenciesTable td {
           text-align: left;
           padding: 12px;
         }
 
-        #modulesTable tr {
+        #dependenciesTable tr {
           border-bottom: 1px solid #ddd;
         }
 
-        #modulesTable tr.header,
-        #modulesTable tr:hover {
+        #dependenciesTable tr.header,
+        #dependenciesTable tr:hover {
           background-color: #f1f1f1;
         }
 
@@ -152,7 +152,7 @@
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("inputModule");
       filter = input.value.toUpperCase();
-      table = document.getElementById("modulesTable");
+      table = document.getElementById("dependenciesTable");
       tr = table.getElementsByTagName("tr");
       for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[0];
