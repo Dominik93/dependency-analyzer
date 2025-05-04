@@ -2,7 +2,6 @@
 <html>
 
 <head>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
         $(function () {
@@ -20,29 +19,29 @@
           box-sizing: border-box;
         }
 
-        #table {
+        .table {
           border-collapse: collapse;
           width: 100%;
           border: 1px solid #ddd;
           font-size: 18px;
         }
 
-        #table th,
-        #table td {
+        .table th,
+        .table td {
           text-align: left;
           padding: 12px;
         }
 
-        #table tr {
+        .table tr {
           border-bottom: 1px solid #ddd;
         }
 
-        #table tr.header,
-        #table tr:hover {
+        .table tr.header,
+        .table tr:hover {
           background-color: #f1f1f1;
         }
 
-        #inputModule {
+        .search {
           background-image: url('/search.png');
           background-position: 10px 10px;
           background-repeat: no-repeat;
@@ -51,61 +50,6 @@
           padding: 12px 20px 12px 40px;
           border: 1px solid #ddd;
           margin-bottom: 12px;
-        }
-
-        #dependenciesTable {
-          border-collapse: collapse;
-          width: 100%;
-          border: 1px solid #ddd;
-          font-size: 18px;
-        }
-
-        #dependenciesTable th,
-        #dependenciesTable td {
-          text-align: left;
-          padding: 12px;
-        }
-
-        #dependenciesTable tr {
-          border-bottom: 1px solid #ddd;
-        }
-
-        #dependenciesTable tr.header,
-        #dependenciesTable tr:hover {
-          background-color: #f1f1f1;
-        }
-
-        #inputClassUsage {
-          background-image: url('/search.png');
-          background-position: 10px 10px;
-          background-repeat: no-repeat;
-          width: 100%;
-          font-size: 16px;
-          padding: 12px 20px 12px 40px;
-          border: 1px solid #ddd;
-          margin-bottom: 12px;
-        }
-
-        #classUsagesTable {
-          border-collapse: collapse;
-          width: 100%;
-          border: 1px solid #ddd;
-          font-size: 18px;
-        }
-
-        #classUsagesTable th,
-        #classUsagesTable td {
-          text-align: left;
-          padding: 12px;
-        }
-
-        #classUsagesTable tr {
-          border-bottom: 1px solid #ddd;
-        }
-
-        #classUsagesTable tr.header,
-        #classUsagesTable tr:hover {
-          background-color: #f1f1f1;
         }
 
         .collapsible {
@@ -139,13 +83,13 @@
 <div id="includedModules"></div>
 
 <h2>Dependencies</h2>
-<input type="text" id="inputModule" onkeyup="filterModules()" placeholder="Search for modules.."
+<input type="text" id="inputModule" class="search" onkeyup="filterModules()" placeholder="Search for modules.."
        title="Type module here">
 
 <div id="includedDependencies"></div>
 
 <h2>Class Usage</h2>
-<input type="text" id="inputClassUsage" onkeyup="filterClassUsage()" placeholder="Search for modules.."
+<input type="text" id="inputClassUsage" class="search" onkeyup="filterClassUsage()" placeholder="Search for modules.."
        title="Type module here">
 
 <div id="includedClassUsage"></div>

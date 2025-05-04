@@ -15,7 +15,7 @@ class HtmlDependencyContentProvider:
 
     def get_content(self):
         self.content = ""
-        self.content += f'<table id="{self.element_id}">\n<tbody>\n'
+        self.content += f'<table class="table" id="{self.element_id}">\n<tbody>\n'
         self.content += self.__print_headers()
         self.content += self.__print_content()
         self.content += '</tbody>\n</table>\n'
