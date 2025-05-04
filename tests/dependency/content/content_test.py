@@ -36,24 +36,20 @@ other 0.0.2   |  2.0.0       |  2.0.0       |
         matrix.set_dependency_version_in_module("second", 'com.sample.first:dependency', "2.0.0")
         matrix.set_dependency_version_in_module("second", 'com.sample.second:dependency', "2.0.0")
 
-        printer = HtmlDependencyContentProvider(matrix, "modulesTable")
+        printer = HtmlDependencyContentProvider(matrix, "dependenciesTable")
         actual = printer.get_content()
-        self.assertEqual('''<table id="modulesTable">
-<tbody>
-<tr class="header">
-<th></th>
-<th>dependency</th>
-<th>dependency</th>
+        self.assertEqual('''<table class="table" id="dependenciesTable"><thead ><tr class="header"><th ></th>
+<th >dependency</th>
+<th >dependency</th>
 </tr>
-<tr>
-<td>first 0.0.1</td>
-<td>1.0.0</td>
-<td>2.0.0</td>
+</thead>
+<tbody ><tr ><th >first 0.0.1</th>
+<td >1.0.0</td>
+<td >2.0.0</td>
 </tr>
-<tr>
-<td>second 0.0.2</td>
-<td>2.0.0</td>
-<td>2.0.0</td>
+<tr ><th >second 0.0.2</th>
+<td >2.0.0</td>
+<td >2.0.0</td>
 </tr>
 </tbody>
 </table>

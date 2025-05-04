@@ -5,7 +5,6 @@ from ..dependency_matrix import DependencyMatrix
 
 class HtmlDependencyContentProvider:
     dependency_matrix: DependencyMatrix = {}
-    content: str = ""
     modules_filter: Callable
 
     def __init__(self, dependency_matrix: DependencyMatrix, element_id=None, modules_filter: Callable = None):
@@ -14,19 +13,15 @@ class HtmlDependencyContentProvider:
         self.modules_filter = modules_filter if modules_filter is not None else lambda x: True
 
     def get_content(self):
-        self.content = ""
-        self.content += f'<table class="table" id="{self.element_id}">\n<tbody>\n'
-        self.content += self.__print_headers()
-        self.content += self.__print_content()
-        self.content += '</tbody>\n</table>\n'
-        return self.content
+        content = self.__add_tag(self.__print_headers(), "thead")
+        content += self.__add_tag(self.__print_content(), "tbody")
+        return self.__add_tag(content, "table", 'class="table" id="' + self.element_id + '"')
 
     def __print_headers(self):
-        dependencies_headers = '<tr class="header">\n' + self.__add_tag('', 'th')
+        dependencies_headers = self.__add_tag('', 'th')
         for dependency in list(filter(lambda x: self._dependency_filter(x), self.dependency_matrix.dependencies)):
             dependencies_headers += self.__add_tag(self.__retrive_dependency(dependency), 'th')
-        dependencies_headers += '</tr>\n'
-        return dependencies_headers
+        return self.__add_tag(dependencies_headers, "tr", 'class="header"')
 
     def __print_content(self):
         content = ''
@@ -35,11 +30,10 @@ class HtmlDependencyContentProvider:
         return content
 
     def __print_row(self, module):
-        module_row = '<tr>\n' + self.__add_tag((module + ' ' + self.dependency_matrix.get_module(module).version), 'td')
+        module_row = self.__add_tag((module + ' ' + self.dependency_matrix.get_module(module).version), 'th')
         for dependency in list(filter(lambda x: self._dependency_filter(x), self.dependency_matrix.dependencies)):
             module_row += self.__add_tag(self.dependency_matrix.get_dependency(module, dependency).version, 'td')
-        module_row += '</tr>\n'
-        return module_row
+        return self.__add_tag(module_row, "tr")
 
     def __add_version(self, modules):
         modules_with_version = []
@@ -53,8 +47,8 @@ class HtmlDependencyContentProvider:
                 return True
         return False
 
-    def __add_tag(self, string, tag):
-        return '<' + tag + '>' + string + '</' + tag + '>\n'
+    def __add_tag(self, value, tag, parameters=""):
+        return f'<{tag} {parameters}>{value}</{tag}>\n'
 
     def __retrive_dependency(self, string):
         return string.split(':')[1]

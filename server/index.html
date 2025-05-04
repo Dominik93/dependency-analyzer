@@ -21,9 +21,30 @@
 
         .table {
           border-collapse: collapse;
-          width: 100%;
           border: 1px solid #ddd;
           font-size: 18px;
+        }
+
+        .table thead th {
+            padding: 3px;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            width: 25vw;
+            background: white;
+        }
+
+        .table thead th:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 2;
+        }
+
+        .table tbody th {
+            position: sticky;
+            left: 0;
+            background: white;
+            z-index: 1;
         }
 
         .table th,

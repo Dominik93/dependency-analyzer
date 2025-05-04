@@ -29,16 +29,12 @@ class ContentProviderTestCase(unittest.TestCase):
 
         printer = HtmlClassUsageContentProvider(matrix, "classUsagesTable")
         actual = printer.get_content()
-        self.assertEqual('''<table id="classUsagesTable">
-<tbody>
-<tr class="header">
-<th></th>
-<th>com.package.artifact</th>
+        self.assertEqual('''<table class="table" id="classUsagesTable"><thead ><tr class="header"><th ></th>
+<th >com.package.artifact</th>
 </tr>
-<tr>
-<td>first 0.0.1</td>
-<td>com.package.artifact.api.Class2
-</td>
+</thead>
+<tbody ><tr ><th >first 0.0.1</th>
+<td ><button type="button" class="collapsible">toggle</button><div class="content">com.package.artifact.api.Class2</div></td>
 </tr>
 </tbody>
 </table>
