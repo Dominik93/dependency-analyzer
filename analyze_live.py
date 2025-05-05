@@ -1,12 +1,9 @@
 import http.server
 import threading
 import time
-
 import schedule
-
 from analyze import analyze_class_usage, analyze_dependencies, clone_all_projects
-from init.init_live import modules, packages, dependencies, git_url, branch, interval_in_minutes, class_regexp, \
-    host, port, directory, print_strategy
+from init.init_live import init
 from printer_manager import PrinterManager
 from server.http_server import start_server
 
@@ -35,15 +32,28 @@ def _analyze(directory: str, server_path: str, modules: list[str], dependencies:
 
 
 if __name__ == '__main__':
-    clone_all_projects(directory, git_url, branch, modules)
-    server_thread = threading.Thread(target=start_server, args=(host, port, Handler))
+    configuration = init()
+    server_configuration = configuration.server_configuration
+    git_configuration = configuration.git_configuration
+    project_configuration = configuration.project_configuration
+    analyze_configuration = configuration.analyze_configuration
+
+    clone_all_projects(project_configuration.directory, git_configuration.git_url, git_configuration.branch,
+                       analyze_configuration.modules)
+    server_thread = threading.Thread(target=start_server,
+                                     args=(server_configuration.host, server_configuration.port, Handler))
     server_thread.daemon = True
     server_thread.start()
 
-    _analyze(directory, server_path, modules, dependencies, packages, class_regexp, print_strategy)
+    _analyze(project_configuration.directory, server_path, analyze_configuration.modules,
+             analyze_configuration.dependencies, analyze_configuration.packages, analyze_configuration.class_regexp,
+             configuration.print_strategy)
 
-    schedule.every(interval_in_minutes).minutes.do(
-        lambda: _analyze(directory, server_path, modules, dependencies, packages, class_regexp, print_strategy))
+    if configuration.interval_in_minutes is not None:
+        schedule.every(configuration.interval_in_minutes).minutes.do(
+            lambda: _analyze(project_configuration.directory, server_path, analyze_configuration.modules,
+                             analyze_configuration.dependencies, analyze_configuration.packages,
+                             analyze_configuration.class_regexp, analyze_configuration.print_strategy))
 
     while True:
         schedule.run_pending()

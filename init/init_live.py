@@ -1,29 +1,46 @@
 import argparse
 import configparser
 
-parser = argparse.ArgumentParser(description='Live server for analyze dependencies')
-parser.add_argument("--config-file", help='Configuration file, default config.ini', default='config.ini')
-parser.add_argument("--host", help='Host', default='')
-parser.add_argument("--port", help='Port', default=8080)
-parser.add_argument("--interval", help='Interval', default=30)
+from init.configuration import Configuration, GitConfiguration, AnalyzeConfiguration, ServerConfiguration, \
+    ProjectConfiguration
 
-args = parser.parse_args()
+_SEARCH_DEPENDENCY = True
 
-config = configparser.ConfigParser()
-config.read(args.config_file)
+_SEARCH_CLASS_USAGE = True
 
-git_url: str = config['GIT']['url']
-branch: str = config['GIT']['branch']
-modules: list[str] = list(map(str.strip, config['MODULES']['modules'].split(',')))
-dependencies: list[str] = list(map(str.strip, config['DEPENDENCY']['dependencies'].split(',')))
-packages: list[str] = list(map(str.strip, config['USAGE']['packages'].split(',')))
-class_regexp: str = config['USAGE']['class_regexp']
-print_strategy: str = 'html'
-host: str = args.host
-interval_in_minutes: int = int(args.interval)
-port: int = int(args.port)
-directory = config['DIRECTORY']['directory']
-print(f"Service configuration {host}:{port} interval: {interval_in_minutes}")
-print(f"Git configuration {git_url} branch: {branch}")
-print(f"Analyzing configuration modules: {modules}, dependencies: {dependencies}, packages: {packages},"
-      f" class_regexp: {class_regexp}, print_strategy: {print_strategy}")
+
+def _get_modules(config):
+    return list(map(str.strip, config['MODULES']['modules'].split(',')))
+
+
+def _get_dependencies(config):
+    return list(map(str.strip, config['DEPENDENCY']['dependencies'].split(',')))
+
+
+def _get_packages(config):
+    return list(map(str.strip, config['USAGE']['packages'].split(',')))
+
+def init():
+    parser = argparse.ArgumentParser(description='Live server for analyze dependencies')
+    parser.add_argument("--config-file", help='Configuration file, default config.ini', default='config.ini')
+    parser.add_argument("--host", help='Host', default='')
+    parser.add_argument("--port", help='Port', default=8080)
+    parser.add_argument("--interval", help='Interval', default=30)
+
+    args = parser.parse_args()
+
+    config = configparser.ConfigParser()
+    config.read(args.config_file)
+
+    git_configuration = GitConfiguration(config['GIT']['url'], config['GIT']['branch'])
+    analyze_configuration = AnalyzeConfiguration(_get_modules(config), _SEARCH_DEPENDENCY, _get_dependencies(config),
+                                                 _SEARCH_CLASS_USAGE, _get_packages(config), config['USAGE']['class_regexp'])
+    server_configuration = ServerConfiguration(args.host, int(args.port))
+    project_configuration = ProjectConfiguration(False, config['DIRECTORY']['directory'])
+    configuration = Configuration(git_configuration, analyze_configuration, server_configuration, project_configuration,
+                                  'html', int(args.interval))
+
+    print(f"Server configuration {server_configuration} interval: {configuration.interval_in_minutes}")
+    print(f"Git configuration {git_configuration}")
+    print(f"Analyzing configuration {analyze_configuration}")
+    return configuration

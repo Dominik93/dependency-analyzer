@@ -1,3 +1,5 @@
+import os
+
 from .dependency import Dependency
 
 
@@ -14,7 +16,7 @@ class Module:
         self.dependencies = {}
 
     def set_version(self, version: str) -> None:
-        print(f'Set {self.name} to {version}')
+        print(f'{os.getpid()}: Set {self.name} to {version}')
         self.version = version
 
     def get_dependency(self, dependency_name: str) -> Dependency:
@@ -24,7 +26,7 @@ class Module:
         self.dependencies[dependency.name] = dependency
 
     def set_dependency_version(self, dependency_name: str, version: str) -> None:
-        print(f'Set {dependency_name} to {version}')
+        print(f'{os.getpid()}: Set {dependency_name} to {version}')
         self.get_dependency(dependency_name).set_version(version)
 
     def __repr__(self):

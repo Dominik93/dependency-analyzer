@@ -1,3 +1,4 @@
+import os
 from typing import Callable
 
 from .module import Module
@@ -31,11 +32,11 @@ class DependencyMatrix:
         return self.get_module(module_name).get_dependency(dependency_name)
 
     def set_module_version(self, module_name: str, version: str) -> None:
-        print(f'Set version of {module_name} to {version}')
+        print(f'{os.getpid()}: Set version of {module_name} to {version}')
         self.modules[module_name].set_version(version)
 
     def set_dependency_version_in_module(self, module_name: str, dependency_name: str, version: str) -> None:
-        print(f'Set version in {module_name} of {dependency_name} to {version}')
+        print(f'{os.getpid()}: Set version in {module_name} of {dependency_name} to {version}')
         self.modules[module_name].set_dependency_version(dependency_name, version)
 
     def get_all_modules(self):

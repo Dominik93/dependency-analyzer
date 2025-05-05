@@ -1,3 +1,5 @@
+import os
+
 from executor import AsyncExecutor
 from maven.maven import Maven
 from maven.pom_loader import find_module_version
@@ -11,8 +13,8 @@ class DependenciesAnalyzer:
     dependency_matrix: DependencyMatrix = {}
 
     def __init__(self, maven: Maven, modules: list[str], dependencies: list[str]):
-        print(f'Modules: {modules}')
-        print(f'Dependencies: {dependencies}')
+        print(f'{os.getpid()}: Modules: {modules}')
+        print(f'{os.getpid()}: Dependencies: {dependencies}')
         self.maven = maven
         self.modules = modules
         self.dependency_matrix = DependencyMatrix(modules, dependencies)
@@ -22,12 +24,10 @@ class DependenciesAnalyzer:
         executor = AsyncExecutor()
         executor.add_all(self.modules, self._calculate_dependencies, [directory])
         executor.execute()
-        for module in self.modules:
-            self._calculate_dependencies(module, directory)
         return self.dependency_matrix
 
     def _calculate_dependencies(self, module, directory):
-        print(f'\nAnalyze dependencies {directory}/{module}')
+        print(f'\n{os.getpid()}: Analyze dependencies {directory}/{module}')
         dependency_tree = self.maven.dependency_tree(module)
         sanitized_dependency_tree = "\n".join(filter(lambda x: "[INFO]" in x, dependency_tree.splitlines()))
         self.dependency_matrix.set_module_version(module, find_module_version(directory, module))
